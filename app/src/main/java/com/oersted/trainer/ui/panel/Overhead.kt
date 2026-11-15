@@ -46,7 +46,6 @@ fun Overhead(
         AnnunciatorBar(s, d)
         if (show("flt")) FlightModule(s, d, edit, noPedestal)
         if (show("hyd")) HydModule(s, d, edit)
-        if (show("elec")) ElecModule(s, d, edit)
         if (show("apu")) ApuModule(s, d, edit)
         if (show("bleed")) BleedModule(s, d, edit)
         if (show("start")) StartModule(s, d, edit)

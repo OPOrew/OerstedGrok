@@ -121,47 +121,6 @@ fun HydModule(s: SimState, d: Derived, edit: SimEdit) {
     }
 }
 
-@Composable
-fun ElecModule(s: SimState, d: Derived, edit: SimEdit) {
-    val gpuConnected = d.groundPowerAvailable
-    PanelModule("Electrical · P5") {
-        PanelRocker("BATTERY", s.battery, onChange = { v -> edit { battery = v } }, lit = d.dcPower)
-        PanelRocker(
-            "APU CONTROL L", s.apuLeftControl,
-            onChange = { v -> edit { apuLeftControl = v; apuGen = v || apuRightControl } },
-            lit = d.apuGenOnBus,
-        )
-        PanelRocker(
-            "APU CONTROL R", s.apuRightControl,
-            onChange = { v -> edit { apuRightControl = v; apuGen = apuLeftControl || v } },
-            lit = d.apuGenOnBus,
-        )
-        PanelRocker(
-            "GRD PWR", s.groundPowerOn,
-            onChange = { v -> edit { groundPowerOn = if (gpuConnected) v else false; groundServiceOn = if (v) false else groundServiceOn } },
-            lit = gpuConnected,
-        )
-        PanelRocker("GEN 1", s.gen1, onChange = { v -> edit { gen1 = v } }, lit = d.eng1Running && s.gen1)
-        PanelRocker("GEN 2", s.gen2, onChange = { v -> edit { gen2 = v } }, lit = d.eng2Running && s.gen2)
-        PanelRocker("BUS TRANSFER AUTO", s.busTie, onChange = { v -> edit { busTie = v } }, lit = d.acPower && d.transferBus1Powered && d.transferBus2Powered)
-        PanelThreeToggle(
-            label = "STANDBY POWER",
-            value = s.standbyPower,
-            options = listOf(PanelOption("OFF", "OFF"), PanelOption("AUTO", "AUTO"), PanelOption("BAT", "BAT")),
-            onChange = { id -> edit { standbyPower = id } },
-        )
-        PanelCaptionLight("TR 1", d.tr1Powered, LightTone.ELEC)
-        PanelCaptionLight("TR 2", d.tr2Powered, LightTone.ELEC)
-        PanelCaptionLight("TR 3", d.tr3Powered, LightTone.ELEC)
-        ReadoutBox(
-            listOf(
-                Triple("AC SOURCE", d.electricalSource1, d.acPower),
-                Triple("TRANSFER BUS 1", if (d.transferBus1Powered) "POWERED" else "OFF", d.transferBus1Powered),
-                Triple("TRANSFER BUS 2", if (d.transferBus2Powered) "POWERED" else "OFF", d.transferBus2Powered),
-            ),
-        )
-    }
-}
 
 @Composable
 fun ApuModule(s: SimState, d: Derived, edit: SimEdit) {
