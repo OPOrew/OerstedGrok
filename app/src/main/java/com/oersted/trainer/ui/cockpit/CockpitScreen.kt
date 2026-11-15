@@ -31,7 +31,6 @@ import com.oersted.trainer.ui.instruments.AlertLenses
 import com.oersted.trainer.ui.instruments.AnnPanel
 import com.oersted.trainer.ui.instruments.TopStrip
 import com.oersted.trainer.ui.panel.MainInstrumentPanel
-import com.oersted.trainer.ui.panel.Overhead
 import com.oersted.trainer.ui.pedestal.CenterPedestal
 import com.oersted.trainer.ui.pedestal.PedestalOtherFunctions
 import com.oersted.trainer.ui.pedestal.ThrustLinkButton
@@ -117,10 +116,6 @@ fun CockpitScreen(model: CockpitModel, audio: com.oersted.trainer.platform.Audio
             Spacer(Modifier.height(8.dp))
             PedestalOtherFunctions(cockpit = model)
         }
-        Spacer(Modifier.height(16.dp))
-        Text("OVERHEAD PANEL", style = MaterialTheme.typography.labelSmall)
-        Spacer(Modifier.height(8.dp))
-        Overhead(cockpit = model)
     }
     LogDrawerView(
         entries = log,
