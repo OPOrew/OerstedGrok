@@ -1,0 +1,3099 @@
+[
+ {
+  "id": "generator-1",
+  "name": "Engine Generator 1",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "AC generation",
+  "function": "Three-phase engine-driven AC source for the No. 1 generator bus.",
+  "flow": "Engine/CSD → Generator 1 → GEN 1 breaker → generator bus 1.",
+  "relationships": "Controlled and protected by the generator control unit and interlocked with transfer/APU/external sources.",
+  "specs": [
+   "ATA 24",
+   "115V AC",
+   "400 Hz"
+  ],
+  "controls": "GEN 1 control",
+  "x": 1520,
+  "y": 180
+ },
+ {
+  "id": "generator-2",
+  "name": "Engine Generator 2",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "AC generation",
+  "function": "Three-phase engine-driven AC source for the No. 2 generator bus.",
+  "flow": "Engine/CSD → Generator 2 → GEN 2 breaker → generator bus 2.",
+  "relationships": "Controlled and protected by the generator control unit and interlocked with transfer/APU/external sources.",
+  "specs": [
+   "ATA 24",
+   "115V AC",
+   "400 Hz"
+  ],
+  "controls": "GEN 2 control",
+  "x": 1520,
+  "y": 215
+ },
+ {
+  "id": "apu-generator",
+  "name": "APU Generator",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "AC generation",
+  "function": "Single APU-driven AC source connected to the tie bus and selected load buses through the APU/BTB controls.",
+  "flow": "APU → APU generator → APU GB → tie bus → BTB 1/2.",
+  "relationships": "Cannot parallel with external power or an engine-generator source on the same bus; controlled by APU GCU.",
+  "specs": [
+   "ATA 24",
+   "115V AC",
+   "400 Hz"
+  ],
+  "controls": "APU GEN L/R",
+  "x": 1520,
+  "y": 250
+ },
+ {
+  "id": "gen1-breaker",
+  "name": "Generator 1 Breaker",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "AC generation",
+  "function": "Connects Generator 1 to its generator/load distribution when source and protection conditions are valid.",
+  "flow": "GEN 1 → generator breaker → bus distribution.",
+  "relationships": "Interlocked with generator control and bus-transfer logic.",
+  "specs": [
+   "ATA 24",
+   "115V 400 Hz"
+  ],
+  "controls": "GEN 1 control",
+  "x": 1560,
+  "y": 220
+ },
+ {
+  "id": "gen2-breaker",
+  "name": "Generator 2 Breaker",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "AC generation",
+  "function": "Connects Generator 2 to its generator/load distribution when source and protection conditions are valid.",
+  "flow": "GEN 2 → generator breaker → bus distribution.",
+  "relationships": "Interlocked with generator control and bus-transfer logic.",
+  "specs": [
+   "ATA 24",
+   "115V 400 Hz"
+  ],
+  "controls": "GEN 2 control",
+  "x": 1560,
+  "y": 255
+ },
+ {
+  "id": "bus-tie-1",
+  "name": "Bus Tie Breaker 1",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "AC distribution",
+  "function": "Connects the No. 1 load side to alternate AC sources when permitted by transfer logic.",
+  "flow": "Alternate source → BTB 1 → transfer/load bus 1.",
+  "relationships": "Source-transfer interlocks prevent impermissible paralleling.",
+  "specs": [
+   "ATA 24"
+  ],
+  "controls": "BUS TRANSFER",
+  "x": 1560,
+  "y": 290
+ },
+ {
+  "id": "bus-tie-2",
+  "name": "Bus Tie Breaker 2",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "AC distribution",
+  "function": "Connects the No. 2 load side to alternate AC sources when permitted by transfer logic.",
+  "flow": "Alternate source → BTB 2 → transfer/load bus 2.",
+  "relationships": "Source-transfer interlocks prevent impermissible paralleling.",
+  "specs": [
+   "ATA 24"
+  ],
+  "controls": "BUS TRANSFER",
+  "x": 1560,
+  "y": 325
+ },
+ {
+  "id": "tr1",
+  "name": "Transformer Rectifier 1",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "DC conversion",
+  "function": "Converts aircraft AC power to DC Bus 1 power.",
+  "flow": "AC source → TR1 → DC Bus 1.",
+  "relationships": "Protected by TR 1 input and output circuitry.",
+  "specs": [
+   "ATA 24"
+  ],
+  "controls": "Automatic",
+  "x": 1560,
+  "y": 360
+ },
+ {
+  "id": "tr2",
+  "name": "Transformer Rectifier 2",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "DC conversion",
+  "function": "Converts aircraft AC power to DC Bus 2 power.",
+  "flow": "AC source → TR2 → DC Bus 2.",
+  "relationships": "Protected by TR 2 input and output circuitry.",
+  "specs": [
+   "ATA 24"
+  ],
+  "controls": "Automatic",
+  "x": 1560,
+  "y": 395
+ },
+ {
+  "id": "tr3",
+  "name": "Transformer Rectifier 3",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "DC conversion",
+  "function": "Provides the backup DC conversion path from an available main AC source.",
+  "flow": "Available main AC source → TR3 → DC backup/tie path.",
+  "relationships": "Provides backup to the DC system when primary TR sources are unavailable and the AC source is healthy.",
+  "specs": [
+   "ATA 24"
+  ],
+  "controls": "Automatic",
+  "x": 1560,
+  "y": 430
+ },
+ {
+  "id": "static-inverter",
+  "name": "Static Inverter",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "Standby power",
+  "function": "Converts battery DC to standby AC power following normal-source loss in AUTO/BAT standby operation.",
+  "flow": "Battery bus → static inverter → standby AC bus.",
+  "relationships": "Controlled by standby power transfer relays.",
+  "specs": [
+   "ATA 24",
+   "Standby AC"
+  ],
+  "controls": "STANDBY POWER",
+  "x": 1560,
+  "y": 465
+ },
+ {
+  "id": "battery-charger",
+  "name": "Battery Charger",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "Battery",
+  "function": "Maintains aircraft battery charge when an approved charging source is available.",
+  "flow": "AC charging source → charger → battery.",
+  "relationships": "Separate from the battery discharge path and standby inverter.",
+  "specs": [
+   "ATA 24"
+  ],
+  "controls": "Automatic",
+  "x": 1560,
+  "y": 500
+ },
+ {
+  "id": "external-power-contactor",
+  "name": "External Power Contactor",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "Ground power",
+  "function": "Connects the external ground power source to aircraft AC distribution when interlocks permit.",
+  "flow": "GPU receptacle → external power contactor → AC distribution.",
+  "relationships": "Interlocked against impermissible source paralleling.",
+  "specs": [
+   "ATA 24"
+  ],
+  "controls": "GRD PWR",
+  "x": 1560,
+  "y": 535
+ },
+ {
+  "id": "landing-gear-electrical-module",
+  "name": "Landing Gear Electrical Module",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Gear control and indication",
+  "function": "Contains control/safety relays and solid-state circuits for landing gear control and indication.",
+  "flow": "Proximity sensors → module logic → safety relays / indications.",
+  "relationships": "Works with air/ground sensing and gear-position proximity sensors.",
+  "specs": [
+   "ATA 32"
+  ],
+  "controls": "Gear selector / test switches",
+  "x": 1700,
+  "y": 220
+ },
+ {
+  "id": "gear-proximity-sensors",
+  "name": "Landing Gear Proximity Sensors",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Gear sensing",
+  "function": "Sense gear actuator proximity/position for control and indication.",
+  "flow": "Gear actuator target → proximity sensor → landing gear electrical module.",
+  "relationships": "Provides downlock/uplock/transit and safety-sensing inputs.",
+  "specs": [
+   "Solid-state sensing",
+   "ATA 32"
+  ],
+  "controls": "Automatic",
+  "x": 1700,
+  "y": 255
+ },
+ {
+  "id": "air-ground-safety-sensors",
+  "name": "Air/Ground Safety Sensors",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Gear safety",
+  "function": "Provide the air/ground safety signals that gate landing gear selector operation.",
+  "flow": "Air/ground sensor → safety relay/module → gear selector lock logic.",
+  "relationships": "Ground sensing prevents normal UP selection on the ground; maintenance test circuits can isolate/verify the safety relays.",
+  "specs": [
+   "ATA 32"
+  ],
+  "controls": "Air/ground sensing test",
+  "x": 1700,
+  "y": 290
+ },
+ {
+  "id": "brake-li",
+  "name": "Left Inboard Brake",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Braking",
+  "function": "Left main-wheel inboard brake supplied by the System A brake path.",
+  "flow": "Brake metering → brake unit → wheel.",
+  "relationships": "Antiskid channel modulates the applied pressure.",
+  "specs": [
+   "System A",
+   "ATA 32"
+  ],
+  "controls": "Left brake / antiskid",
+  "x": 1700,
+  "y": 325
+ },
+ {
+  "id": "brake-ri",
+  "name": "Right Inboard Brake",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Braking",
+  "function": "Right main-wheel inboard brake supplied by the System A brake path.",
+  "flow": "Brake metering → brake unit → wheel.",
+  "relationships": "Antiskid channel modulates the applied pressure.",
+  "specs": [
+   "System A",
+   "ATA 32"
+  ],
+  "controls": "Right brake / antiskid",
+  "x": 1700,
+  "y": 360
+ },
+ {
+  "id": "brake-lo",
+  "name": "Left Outboard Brake",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Braking",
+  "function": "Left main-wheel outboard brake supplied by the System B brake path.",
+  "flow": "Brake metering → brake unit → wheel.",
+  "relationships": "Antiskid channel modulates the applied pressure.",
+  "specs": [
+   "System B",
+   "ATA 32"
+  ],
+  "controls": "Left brake / antiskid",
+  "x": 1700,
+  "y": 395
+ },
+ {
+  "id": "brake-ro",
+  "name": "Right Outboard Brake",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Braking",
+  "function": "Right main-wheel outboard brake supplied by the System B brake path.",
+  "flow": "Brake metering → brake unit → wheel.",
+  "relationships": "Antiskid channel modulates the applied pressure.",
+  "specs": [
+   "System B",
+   "ATA 32"
+  ],
+  "controls": "Right brake / antiskid",
+  "x": 1700,
+  "y": 430
+ },
+ {
+  "id": "fuel-tank-left",
+  "name": "Left Wing Fuel Tank",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Fuel storage",
+  "function": "Stores usable aircraft fuel and supplies the fuel feed manifold.",
+  "flow": "Tank → boost pump / suction feed → engine manifold.",
+  "relationships": "Feeds engine 1 directly and either engine through crossfeed/manifold paths as configured.",
+  "specs": [
+   "ATA 28",
+   "Quantity monitored"
+  ],
+  "controls": "Fuel quantity / boost pump controls",
+  "x": 1320,
+  "y": 220
+ },
+ {
+  "id": "fuel-tank-center",
+  "name": "Center Fuel Tank",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Fuel storage",
+  "function": "Center-tank fuel source for the main fuel feed system.",
+  "flow": "Center tank → boost pump → fuel manifold.",
+  "relationships": "Feeds the engine fuel manifold through electrically powered boost pumps and associated check/manifold valves.",
+  "specs": [
+   "ATA 28",
+   "Quantity monitored"
+  ],
+  "controls": "Center tank boost pumps",
+  "x": 1320,
+  "y": 250
+ },
+ {
+  "id": "fuel-tank-right",
+  "name": "Right Wing Fuel Tank",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Fuel storage",
+  "function": "Stores usable aircraft fuel and supplies the fuel feed manifold.",
+  "flow": "Tank → boost pump / suction feed → engine manifold.",
+  "relationships": "Feeds engine 2 directly and either engine through crossfeed/manifold paths as configured.",
+  "specs": [
+   "ATA 28",
+   "Quantity monitored"
+  ],
+  "controls": "Fuel quantity / boost pump controls",
+  "x": 1320,
+  "y": 280
+ },
+ {
+  "id": "fuel-boost-pumps",
+  "name": "Fuel Boost Pump Set",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Fuel feed",
+  "function": "Electrically driven boost pumps provide positive fuel pressure to the engine feed manifold.",
+  "flow": "Tank → boost pump → check valve → manifold.",
+  "relationships": "115-V three-phase electrical loads; pumps in a tank are arranged on separate buses so loss of one bus does not remove every pump in that tank.",
+  "specs": [
+   "115V AC",
+   "3-phase motor driven"
+  ],
+  "controls": "BOOST PUMP switches",
+  "x": 1320,
+  "y": 315
+ },
+ {
+  "id": "fuel-crossfeed",
+  "name": "Fuel Crossfeed Valve",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Fuel distribution",
+  "function": "Connects the left and right engine fuel manifolds for crossfeed operation.",
+  "flow": "Left manifold ↔ crossfeed valve ↔ right manifold.",
+  "relationships": "28V DC motor-operated valve; controlled by the fuel system switching logic.",
+  "specs": [
+   "28V DC motor",
+   "Manifold isolation"
+  ],
+  "controls": "CROSSFEED control",
+  "x": 1320,
+  "y": 350
+ },
+ {
+  "id": "eng1-fuel-shutoff",
+  "name": "Engine 1 Fuel Shutoff Valve",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Engine feed",
+  "function": "Shuts fuel flow to engine 1.",
+  "flow": "Fuel manifold → shutoff valve → engine 1 fuel control.",
+  "relationships": "28V DC motor-operated valve; coordinated with engine/fire control functions.",
+  "specs": [
+   "28V DC motor"
+  ],
+  "controls": "Engine 1 start/fuel/fire controls",
+  "x": 1320,
+  "y": 385
+ },
+ {
+  "id": "eng2-fuel-shutoff",
+  "name": "Engine 2 Fuel Shutoff Valve",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Engine feed",
+  "function": "Shuts fuel flow to engine 2.",
+  "flow": "Fuel manifold → shutoff valve → engine 2 fuel control.",
+  "relationships": "28V DC motor-operated valve; coordinated with engine/fire control functions.",
+  "specs": [
+   "28V DC motor"
+  ],
+  "controls": "Engine 2 start/fuel/fire controls",
+  "x": 1320,
+  "y": 420
+ },
+ {
+  "id": "apu-fuel-valve",
+  "name": "APU Fuel Valve",
+  "system": "fuel",
+  "ata": "28/49",
+  "group": "APU feed",
+  "function": "Controls fuel supply to the APU fuel control.",
+  "flow": "Aircraft fuel source → APU fuel valve → APU fuel control.",
+  "relationships": "APU start and shutdown sequence; fire control can close fuel supply.",
+  "specs": [
+   "ATA 28/49"
+  ],
+  "controls": "APU MASTER / fire controls",
+  "x": 1320,
+  "y": 455
+ },
+ {
+  "id": "fuel-quantity",
+  "name": "Fuel Quantity Indicating System",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Indication",
+  "function": "Measures and displays fuel quantity for the aircraft tanks.",
+  "flow": "Tank units / compensators → indicating system → cockpit displays.",
+  "relationships": "Requires electrical power; testable from the indicating system.",
+  "specs": [
+   "ATA 28-41"
+  ],
+  "controls": "Fuel quantity indicators / test",
+  "x": 1320,
+  "y": 490
+ },
+ {
+  "id": "fire-module-p8",
+  "name": "Fire Protection System Module P8-1",
+  "system": "fire",
+  "ata": "26",
+  "group": "Detection and control",
+  "function": "Monitors fire/overheat detection and controls engine/APU fire extinguishing functions.",
+  "flow": "Detector loops → warning/control module → crew indications and extinguisher control.",
+  "relationships": "Contains engine/APU warning lights, overheat indications, detector test, bell cutout and extinguisher controls.",
+  "specs": [
+   "P8-1",
+   "28V DC"
+  ],
+  "controls": "Fire test / bell cutout / fire switches",
+  "x": 1440,
+  "y": 220
+ },
+ {
+  "id": "engine-fire-det-1",
+  "name": "Engine 1 Fire/Overheat Detection",
+  "system": "fire",
+  "ata": "26",
+  "group": "Detection",
+  "function": "Detects engine 1 fire and overheat conditions.",
+  "flow": "Detector loop → fire protection module.",
+  "relationships": "Feeds engine 1 fire warning and extinguishing control logic.",
+  "specs": [
+   "ATA 26"
+  ],
+  "controls": "Tested through fire protection module",
+  "x": 1440,
+  "y": 255
+ },
+ {
+  "id": "engine-fire-det-2",
+  "name": "Engine 2 Fire/Overheat Detection",
+  "system": "fire",
+  "ata": "26",
+  "group": "Detection",
+  "function": "Detects engine 2 fire and overheat conditions.",
+  "flow": "Detector loop → fire protection module.",
+  "relationships": "Feeds engine 2 fire warning and extinguishing control logic.",
+  "specs": [
+   "ATA 26"
+  ],
+  "controls": "Tested through fire protection module",
+  "x": 1440,
+  "y": 290
+ },
+ {
+  "id": "wheelwell-overheat-det",
+  "name": "Main Wheel-Well Overheat Detection",
+  "system": "fire",
+  "ata": "26",
+  "group": "Detection",
+  "function": "Detects wheel-well overheat/fire conditions.",
+  "flow": "Detector → fire protection module → warning.",
+  "relationships": "Provides wheel-well overheat warning and master caution path.",
+  "specs": [
+   "ATA 26"
+  ],
+  "controls": "Fire/overheat test",
+  "x": 1440,
+  "y": 325
+ },
+ {
+  "id": "engine-fire-bottles",
+  "name": "Engine Fire Extinguisher Bottles",
+  "system": "fire",
+  "ata": "26",
+  "group": "Extinguishing",
+  "function": "Two fixed extinguisher bottles provide two-shot capability to either engine.",
+  "flow": "Bottle → manifold/tubing → selected engine nozzles.",
+  "relationships": "Selected through the engine fire switch/fire handle and bottle discharge circuits.",
+  "specs": [
+   "Two bottles",
+   "Two-shot capability"
+  ],
+  "controls": "Engine fire switches / bottle discharge",
+  "x": 1440,
+  "y": 360
+ },
+ {
+  "id": "cargo-fire-detection",
+  "name": "Cargo Smoke Detection / CEU Set",
+  "system": "fire",
+  "ata": "26",
+  "group": "Cargo detection",
+  "function": "Effectivity-dependent forward/aft lower cargo smoke detection with detector loops and CEUs.",
+  "flow": "Detector A/B → CEU → fire warning/control.",
+  "relationships": "Installed on 737-200 passenger airplanes incorporating SB 26A1081.",
+  "specs": [
+   "Effectivity: SB 26A1081",
+   "Dual-loop detection"
+  ],
+  "controls": "DET SELECT / test",
+  "x": 1440,
+  "y": 395
+ },
+ {
+  "id": "cargo-fire-bottle",
+  "name": "Cargo Fire Extinguishing Bottle",
+  "system": "fire",
+  "ata": "26",
+  "group": "Cargo extinguishing",
+  "function": "Effectivity-dependent cargo fire extinguishing bottle and distribution plumbing.",
+  "flow": "Bottle → discharge tubing → forward/aft cargo nozzles.",
+  "relationships": "Effectivity-dependent on SB 26A1081.",
+  "specs": [
+   "Effectivity: SB 26A1081"
+  ],
+  "controls": "Cargo fire discharge control",
+  "x": 1440,
+  "y": 430
+ },
+ {
+  "id": "apu-door",
+  "name": "APU Air Inlet Door Actuator",
+  "system": "apu",
+  "ata": "49",
+  "group": "Start sequence",
+  "function": "Electrically-driven actuator that opens and closes the APU air inlet door, admitting compressor inlet air and accessory cooling air.",
+  "flow": "Fuel valve opens first; once fully open, power transfers to this actuator (~17–20 s). A door position switch releases the starter lockout relay.",
+  "relationships": "Sequenced with the APU fuel shutoff valve. Fire control handle commands this door closed.",
+  "specs": [
+   "28V DC actuator",
+   "Cycle ~17–20 s",
+   "Positional"
+  ],
+  "controls": "APU MASTER on P5. APU CONT CB on P6. No dedicated light — a slow door shows up as a failed start.",
+  "x": 1088,
+  "y": 248
+ },
+ {
+  "id": "apu-heater",
+  "name": "APU Fuel Heater",
+  "system": "apu",
+  "ata": "49",
+  "group": "Fuel",
+  "function": "Warms APU fuel before the fuel control unit to prevent icing.",
+  "flow": "In the supply line upstream of the FCU. A pneumatically-actuated heater control valve opens as needed.",
+  "relationships": "Heat from APU compressor bleed or oil — not the main engines. Valve failed open can cycle the load control valve.",
+  "specs": [
+   "Passive pneumatic/thermal",
+   "Continuous-flow HX"
+  ],
+  "controls": "None — automatic, no cockpit switch or light.",
+  "x": 1058,
+  "y": 268
+ },
+ {
+  "id": "apu-bleed",
+  "name": "APU Bleed Air Valve",
+  "system": "apu",
+  "ata": "49",
+  "group": "Bleed",
+  "function": "Motor-driven valve metering APU compressor discharge into the aircraft pneumatic manifold.",
+  "flow": "Armed at 95% rpm. Opens in 12–14 s when APU BLEED is OPEN to avoid speed droop. Held by the differential pressure regulator and EGT thermostat.",
+  "relationships": "Feeds the same manifold as engine bleed. Interlocked with APU GEN OFF BUS at 95%. DUAL BLEED protects against APU + engine bleed.",
+  "specs": [
+   "28V DC motor",
+   "Arm 95% rpm",
+   "12–14 s open",
+   "~40–46 psi"
+  ],
+  "controls": "APU BLEED OPEN/CLOSE on P5. DUAL BLEED light. Duct pressure and APU EGT gauges.",
+  "x": 1028,
+  "y": 220
+ },
+ {
+  "id": "apu-bottle",
+  "name": "APU Fire Extinguisher Bottle",
+  "system": "apu",
+  "ata": "26",
+  "group": "Fire",
+  "function": "Stores fire-suppressant for manual discharge into the APU compartment.",
+  "flow": "Armed when either FIRE SWITCH is pulled (cabin or MLG wheel well). Pull also shuts the APU down. Discharge is a separate action.",
+  "relationships": "Parallel to, but separate from, engine bottles. Detection lights FIRE WARN; the switch closes fuel, bleed, inlet door, and trips the generator.",
+  "specs": [
+   "28V DC armed/fired",
+   "Halogenated + nitrogen",
+   "Single-shot"
+  ],
+  "controls": "FIRE SWITCH arms; discharge button fires. FIRE PROTECTION CBs on P6.",
+  "x": 1068,
+  "y": 200
+ },
+ {
+  "id": "starter",
+  "name": "Pneumatic Starter",
+  "system": "powerplant",
+  "ata": "80",
+  "group": "Starting",
+  "function": "Turbine air motor converting manifold air into torque to accelerate N2 to self-sustaining speed.",
+  "flow": "Manifold → starter valve → starter turbine → accessory gearbox → N2. Cuts out at 35–40% N2.",
+  "relationships": "Shares the accessory gearbox with CSD/generator and tachometer. Air from APU, opposite engine, or ground cart.",
+  "specs": [
+   "Pneumatic",
+   "Min ~30 psi",
+   "Typical 40–50 psi",
+   "Cutout 35–40% N2"
+  ],
+  "controls": "ENGINE START switch. Indicated by START VALVE OPEN and rising N2.",
+  "x": 430,
+  "y": 92
+ },
+ {
+  "id": "starter-valve",
+  "name": "Starter Valve",
+  "system": "powerplant",
+  "ata": "80",
+  "group": "Starting",
+  "function": "Pneumatically-operated, solenoid-controlled butterfly metering air to the starter.",
+  "flow": "In the duct between manifold and starter; opens when the start switch energizes it.",
+  "relationships": "Shares the pneumatic manifold with packs and APU bleed. Remaining illuminated after cutout requires immediate shutdown.",
+  "specs": [
+   "28V DC solenoid + pneumatic",
+   "~40–50 psi"
+  ],
+  "controls": "ENGINE START GRD/OFF/CONT/FLT. ENGINE START VALVES CB P6-2. START VALVE OPEN light.",
+  "x": 455,
+  "y": 118
+ },
+ {
+  "id": "igniter",
+  "name": "Igniter Plugs",
+  "system": "powerplant",
+  "ata": "74",
+  "group": "Ignition",
+  "function": "High-energy plugs in chambers 4 and 7 that ignite the fuel-air mixture.",
+  "flow": "Fired by the ignition exciter in sequence with fuel introduction at IDLE.",
+  "relationships": "Dependent on the exciter; both plugs fire in GRD/FLT, individual plugs in L IGN / R IGN.",
+  "specs": [
+   "20 J GRD/FLT",
+   "4 J continuous"
+  ],
+  "controls": "ENGINE START switch. START IGNITION (28V) and LOW ENERGY IGNITION (115V) CBs on P6-2.",
+  "x": 500,
+  "y": 88
+ },
+ {
+  "id": "exciter",
+  "name": "Ignition Exciter",
+  "system": "powerplant",
+  "ata": "74",
+  "group": "Ignition",
+  "function": "Capacitor-discharge unit converting 28V DC / 115V AC into high-voltage pulses.",
+  "flow": "Aircraft power → exciter → high-tension leads → igniters.",
+  "relationships": "Upstream of the igniters; enabled by the start switch.",
+  "specs": [
+   "28V start & 115V low energy",
+   "20,000–26,000 V"
+  ],
+  "controls": "Shared with igniter plugs.",
+  "x": 478,
+  "y": 70
+ },
+ {
+  "id": "ac-gen",
+  "name": "Engine Driven AC Generator",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "Electrical",
+  "function": "Primary 115/200V 400 Hz three-phase power for the transfer buses.",
+  "flow": "Driven off the accessory gearbox via CSD at constant 6000 rpm.",
+  "relationships": "Paired with the CSD. Cooled by fan air. Primary in-flight electrical source.",
+  "specs": [
+   "115/200V AC 400 Hz",
+   "6000 rpm via CSD"
+  ],
+  "controls": "GEN 1 / GEN 2 on P5. GEN OFF BUS, BUS OFF, TRANSFER BUS OFF lights.",
+  "x": 412,
+  "y": 128
+ },
+ {
+  "id": "csd",
+  "name": "Generator Constant Speed Drive",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "Electrical",
+  "function": "Hydromechanical transmission holding generator speed at 6000 rpm across N2 range.",
+  "flow": "Engine pad → CSD differential → constant 6000 rpm → generator.",
+  "relationships": "Self-contained oil system with air-oil cooler. Electrically disconnectable, ground-reset only.",
+  "specs": [
+   "Mechanical gearbox",
+   "Self-contained oil"
+  ],
+  "controls": "Guarded CSD DISCONNECT. CSD LOW OIL PRESSURE / HIGH OIL TEMP lights.",
+  "x": 392,
+  "y": 110
+ },
+ {
+  "id": "tach",
+  "name": "Engine Tachometer Generator",
+  "system": "powerplant",
+  "ata": "77",
+  "group": "Indicating",
+  "function": "Self-generating magneto providing an AC signal proportional to N1 or N2.",
+  "flow": "Accessory gearbox → tach generator → N1/N2 indicators. No bus power required.",
+  "relationships": "Critical during start — N2 is the crew’s cue for fuel introduction and starter cutout.",
+  "specs": [
+   "Self-generating",
+   "Variable AC"
+  ],
+  "controls": "Indicator lighting via AC bus (P6 indicator group).",
+  "x": 448,
+  "y": 148
+ },
+ {
+  "id": "ff-xmtr",
+  "name": "Fuel Flow Transmitter",
+  "system": "powerplant",
+  "ata": "77",
+  "group": "Indicating",
+  "function": "Measures fuel mass flow between the FCU and engine manifold.",
+  "flow": "Sensing element in the fuel line → cockpit fuel flow gauge.",
+  "relationships": "Read with N1 and EGT for engine performance.",
+  "specs": [
+   "AC/DC excitation",
+   "lb/hr"
+  ],
+  "controls": "Engine INDICATOR group CB on P6.",
+  "x": 520,
+  "y": 128
+ },
+ {
+  "id": "fo-cooler",
+  "name": "Fuel & Oil Cooler",
+  "system": "powerplant",
+  "ata": "73/79",
+  "group": "Cooling",
+  "function": "Uses engine fuel to cool lubricating oil while preheating fuel.",
+  "flow": "Hot oil through tubes, cold fuel through the shell toward the FCU.",
+  "relationships": "Ties oil and fuel temperature together.",
+  "specs": [
+   "Passive heat exchanger"
+  ],
+  "controls": "Oil temperature gauge and low oil pressure warning.",
+  "x": 538,
+  "y": 108
+ },
+ {
+  "id": "nose-dome",
+  "name": "Engine Nose Dome",
+  "system": "powerplant",
+  "ata": "72",
+  "group": "Inlet",
+  "function": "Inlet cone directing airflow into the compressor, with 8th-stage anti-ice.",
+  "flow": "8th-stage bleed → internal ducting → anti-ice exhaust. Houses the Pt2 probe.",
+  "relationships": "Rotates with N1. Pt2 feeds engine indicating.",
+  "specs": [
+   "N1 driven",
+   "8th-stage anti-ice"
+  ],
+  "controls": "ENG ANTI-ICE on P5. ANTI-ICE VALVE OPEN light.",
+  "x": 348,
+  "y": 92
+ },
+ {
+  "id": "eng-bleed-8",
+  "name": "8th-Stage Engine Bleed Port",
+  "system": "powerplant",
+  "ata": "36",
+  "group": "Bleed air",
+  "function": "Primary compressor bleed source for engine pneumatic supply.",
+  "flow": "8th-stage compressor bleed port → engine bleed ducting / precooler / bleed control.",
+  "relationships": "Engine compressor source; not an accessory-gearbox component.",
+  "specs": [
+   "Compressor bleed",
+   "8th stage"
+  ],
+  "controls": "Controlled by engine bleed / pressure-ratio logic.",
+  "x": 760,
+  "y": 420
+ },
+ {
+  "id": "eng-bleed-13",
+  "name": "13th-Stage Engine Bleed Port",
+  "system": "powerplant",
+  "ata": "36",
+  "group": "Bleed air",
+  "function": "High-stage compressor bleed source used when higher pressure is required.",
+  "flow": "13th-stage compressor bleed port → high-stage modulation / bleed control → engine pneumatic ducting.",
+  "relationships": "Separate compressor-stage source; do not place it under the accessory gearbox.",
+  "specs": [
+   "Compressor bleed",
+   "13th stage"
+  ],
+  "controls": "Pressure-ratio / high-stage bleed control.",
+  "x": 760,
+  "y": 450
+ },
+ {
+  "id": "eng-bleed",
+  "name": "Engine Bleed Air Valve",
+  "system": "powerplant",
+  "ata": "36",
+  "group": "Bleed",
+  "function": "DC motor-driven shutoff admitting engine bleed into the pneumatic manifold.",
+  "flow": "Downstream of the precooler → bleed valve → cross-feed manifold. Auto-closes at 490°F.",
+  "relationships": "Direct link to packs and cabin inflow. Cross-feeds with APU via the isolation valve.",
+  "specs": [
+   "28V DC motor",
+   "~40–46 psi",
+   "Trip 490°F"
+  ],
+  "controls": "BLEED 1 / BLEED 2. BLEED TRIP OFF, MASTER CAUTION, AIR COND.",
+  "x": 560,
+  "y": 150
+ },
+ {
+  "id": "bleed-check",
+  "name": "Bleed Air Check Valve",
+  "system": "powerplant",
+  "ata": "36",
+  "group": "Bleed",
+  "function": "Prevents back-pressurization of the 8th-stage bleed port.",
+  "flow": "In the 8th-stage line upstream of the precooler.",
+  "relationships": "Isolates 8th/13th stage from APU or ground cart reverse flow.",
+  "specs": [
+   "Spring-loaded",
+   "Pressure differential"
+  ],
+  "controls": "None.",
+  "x": 548,
+  "y": 172
+ },
+ {
+  "id": "precooler",
+  "name": "Bleed Air Heat Exchanger (Precooler)",
+  "system": "powerplant",
+  "ata": "36",
+  "group": "Bleed",
+  "function": "Cools ~520°F compressor bleed with fan discharge air.",
+  "flow": "Bleed through core; fan air through matrix, overboard via the precooler valve. Target ~370–450°F.",
+  "relationships": "Feeds the engine bleed valve. Protected by the 490°F overheat switch.",
+  "specs": [
+   "Thermostatic",
+   "Target 370–450°F"
+  ],
+  "controls": "Shares BLEED TRIP OFF with the bleed valve.",
+  "x": 575,
+  "y": 128
+ },
+ {
+  "id": "prv",
+  "name": "Pressure Ratio Bleed Control",
+  "system": "powerplant",
+  "ata": "75",
+  "group": "Anti-surge",
+  "function": "Operates compressor surge-bleed valves from front-compressor pressure ratio.",
+  "flow": "Senses Pt2 and Ps3 → pilot valve → Ps4 air to surge valves → dump to fan stream.",
+  "relationships": "Prevents stall/surge at low-to-mid power.",
+  "specs": [
+   "Hydro-pneumatic",
+   "Self-contained"
+  ],
+  "controls": "Automatic — no cockpit switch.",
+  "x": 590,
+  "y": 98
+ },
+ {
+  "id": "msov",
+  "name": "Modulating and Shutoff Valve",
+  "system": "powerplant",
+  "ata": "36",
+  "group": "Bleed",
+  "function": "Regulates 13th-stage high-pressure bleed into the manifold; shuts off when 8th-stage is enough.",
+  "flow": "13th-stage duct → MSOV → merges with 8th-stage upstream of the precooler.",
+  "relationships": "Works with the 450°F thermostat.",
+  "specs": [
+   "28V DC control, pneumatic",
+   "Needs 7 psi regulator"
+  ],
+  "controls": "Automatic; tied to BLEED TRIP OFF logic.",
+  "x": 605,
+  "y": 150
+ },
+ {
+  "id": "rev-doors",
+  "name": "Thrust Reverser Deflector Doors",
+  "system": "powerplant",
+  "ata": "78",
+  "group": "Reverser",
+  "function": "Clamshell doors that redirect exhaust forward and outboard for reverse thrust.",
+  "flow": "Hydraulic actuators via overcenter linkages. Held closed by mechanical locks.",
+  "relationships": "Ground only. REVERSER UNLOCKED lights when doors leave stowed.",
+  "specs": [
+   "Hyd System A ~3000 psi"
+  ],
+  "controls": "Reverser lever with interlocks. REVERSER UNLOCKED light.",
+  "x": 620,
+  "y": 92
+ },
+ {
+  "id": "rev-lock",
+  "name": "Thrust Reverser Lock",
+  "system": "powerplant",
+  "ata": "78",
+  "group": "Reverser",
+  "function": "Mechanical latch holding deflector doors stowed until hydraulic pressure is applied.",
+  "flow": "Pressure unlocks the latch slightly before actuator extension. Proximity sensor reports door status.",
+  "relationships": "Sensor drives REVERSER UNLOCKED.",
+  "specs": [
+   "Mechanical latch + proximity"
+  ],
+  "controls": "REVERSER UNLOCKED on the overhead.",
+  "x": 638,
+  "y": 118
+ },
+ {
+  "id": "rev-iso",
+  "name": "Thrust Reverser Isolation Valve",
+  "system": "powerplant",
+  "ata": "78",
+  "group": "Reverser",
+  "function": "Solenoid valve controlling Hyd A supply to the reverser system.",
+  "flow": "Opens only when fire switch, oil pressure, and air/ground interlocks are satisfied.",
+  "relationships": "Spring-loaded closed; controlled by air-ground, engine-running/low-oil-pressure and fire-switch inputs.",
+  "specs": [
+   "Solenoid",
+   "Fire + oil + WOW"
+  ],
+  "controls": "ISOLATION VALVE light. ENG 1/2 THRUST REVERSER CBs on P6.",
+  "x": 655,
+  "y": 140
+ },
+ {
+  "id": "rev-act",
+  "name": "Thrust Reverser Actuators",
+  "system": "powerplant",
+  "ata": "78",
+  "group": "Reverser",
+  "function": "Hydraulic linear actuators driving deflector door linkages.",
+  "flow": "Hyd A → isolation valve → directional valve → extend to deploy / retract to stow.",
+  "relationships": "Normally supplied by System A; aircraft with the standby connection can use standby hydraulic pressure through shuttle valves as the alternate source.",
+  "specs": [
+   "Hyd System A ~3000 psi"
+  ],
+  "controls": "Reverser lever once isolation is open.",
+  "x": 640,
+  "y": 70
+ },
+ {
+  "id": "engine-fuel-heat-exchanger",
+  "name": "Engine Fuel Heat Exchanger",
+  "system": "powerplant",
+  "ata": "73",
+  "group": "Fuel control",
+  "function": "Represents the engine fuel heat-exchanger assembly. The linked ATA 28 fuel-heater control-path entry models the simulator switch, available power, valve indication and temperature response.",
+  "flow": "Fuel flows through the heater continuously; 13th-stage compressor bleed air passes through the heater air tubes only when the fuel heat valve is open. A bypass valve permits fuel to bypass the heater if clogged.",
+  "relationships": "Engine-level hardware representation; do not interpret the simulator thermal response as a verified AMM heater schedule. Downstream fuel-filter icing feedback is represented separately.",
+  "specs": [
+   "Air-fuel heat exchanger",
+   "13th-stage bleed",
+   "Engine hardware representation"
+  ],
+  "controls": "Linked to the ATA 28 FUEL HEAT control-path model.",
+  "x": 700,
+  "y": 180
+ },
+ {
+  "id": "fuel-filter-dp",
+  "name": "Fuel Filter Differential Pressure Switch",
+  "system": "powerplant",
+  "ata": "73",
+  "group": "Fuel control",
+  "function": "Detects increased differential pressure across the engine main fuel filter when icing restricts fuel flow.",
+  "flow": "Senses pressure differential across the main fuel filter; signal is a feedback/indication path, not a fuel-flow component.",
+  "relationships": "Closes on excessive differential pressure to illuminate the fuel filter icing indication and master caution; opens again after the ice is melted.",
+  "specs": [
+   "Pressure-switch feedback",
+   "Filter icing detection"
+  ],
+  "controls": "Feeds FUEL FILTER ICING indication and fuel-heating logic.",
+  "x": 720,
+  "y": 200
+ },
+ {
+  "id": "engine-fcu",
+  "name": "Engine Fuel Control Unit",
+  "system": "powerplant",
+  "ata": "73",
+  "group": "Fuel control",
+  "function": "Meters and regulates engine fuel flow in response to the engine control system.",
+  "flow": "Aircraft engine fuel supply → engine-driven fuel pumping/control stages → fuel control unit → engine fuel manifold/nozzles.",
+  "relationships": "Mechanically commanded by the engine control system; receives fuel from the aircraft fuel system and interfaces with the fuel/oil cooler and fuel-flow indication.",
+  "specs": [
+   "Engine fuel metering",
+   "Mechanical control interface"
+  ],
+  "controls": "Thrust control and start-lever interfaces; engine fuel shutoff is a separate aircraft-fuel-system isolation function.",
+  "x": 730,
+  "y": 220
+ },
+ {
+  "id": "thrust-control",
+  "name": "Engine Thrust Control",
+  "system": "powerplant",
+  "ata": "76",
+  "group": "Engine controls",
+  "function": "Transfers forward thrust-lever movement through the engine control mechanism to regulate fuel flow and forward thrust.",
+  "flow": "Thrust lever → control drum/cables/push-pull linkage → engine fuel control unit.",
+  "relationships": "Separate control path from physical fuel flow. Reverse-thrust control uses the same general cable/linkage system but drives the reverser function in the reverse direction.",
+  "specs": [
+   "Mechanical control",
+   "Forward/reverse interlock"
+  ],
+  "controls": "THRUST LEVER and reverse-thrust lever; mechanical lockout prevents simultaneous forward and reverse thrust commands.",
+  "x": 740,
+  "y": 240
+ },
+ {
+  "id": "start-control",
+  "name": "Engine Start Control",
+  "system": "powerplant",
+  "ata": "76",
+  "group": "Engine controls",
+  "function": "Uses the engine start lever and associated control mechanism to initiate ignition and fuel introduction or shut off fuel as applicable to effectivity.",
+  "flow": "Start lever → start control shaft/drum/switches → ignition enable and engine fuel-control/start functions.",
+  "relationships": "Interfaces with ATA 74 ignition and ATA 73 fuel control; fuel introduction is performed only after starter rotation is established.",
+  "specs": [
+   "CUTOFF / IDLE detents",
+   "Mechanical/electrical interfaces"
+  ],
+  "controls": "ENGINE START LEVER.",
+  "x": 750,
+  "y": 260
+ },
+ {
+  "id": "epr-sensing",
+  "name": "EPR Pressure Sensing & Transmitter",
+  "system": "powerplant",
+  "ata": "77",
+  "group": "Indicating",
+  "function": "Converts engine inlet Pt2 and exhaust Pt7 pressures into an engine pressure ratio signal for the cockpit EPR indicator.",
+  "flow": "Pt2 nose-dome probe + Pt7 exhaust probes → EPR transmitter → three-phase signal → EPR indicator.",
+  "relationships": "Indication/feedback only; not inserted into the engine airflow path. Pt2 probe is protected by engine anti-ice.",
+  "specs": [
+   "Pt7/Pt2",
+   "Six Pt7 probes",
+   "Three-phase electrical output"
+  ],
+  "controls": "EPR circuit breaker; EPR indicator provides pointer/digital readout.",
+  "x": 760,
+  "y": 280
+ },
+ {
+  "id": "egt-sensing",
+  "name": "EGT Thermocouple System",
+  "system": "powerplant",
+  "ata": "77",
+  "group": "Indicating",
+  "function": "Measures engine exhaust gas temperature using eight thermocouple probes and sends the averaged signal to the cockpit EGT indicator.",
+  "flow": "Eight exhaust thermocouple probes in parallel → harness/lead → EGT indicator.",
+  "relationships": "Pure indication/feedback branch; it does not alter exhaust flow.",
+  "specs": [
+   "8 probes per engine",
+   "Chromel/alumel sensing",
+   "Averaged signal"
+  ],
+  "controls": "EGT indicator and associated circuit.",
+  "x": 770,
+  "y": 300
+ },
+ {
+  "id": "oil-pressure",
+  "name": "Engine Oil Pressure System",
+  "system": "powerplant",
+  "ata": "79",
+  "group": "Oil",
+  "function": "Supplies pressure oil to engine bearings and accessory drives and returns scavenged oil to the tank.",
+  "flow": "Oil tank → engine-driven pressure pump → oil filter → fuel/oil cooler → engine bearings/accessories → scavenge pumps → accessory gearbox sump → pump scavenge stage → oil tank.",
+  "relationships": "Closed-loop lubrication system with separate breather path. Filter and cooler bypass valves preserve oil flow if restricted.",
+  "specs": [
+   "Self-contained",
+   "Pressure + scavenge circuits",
+   "Four scavenge pumps"
+  ],
+  "controls": "Oil pressure/temperature indications and low-oil-pressure warning.",
+  "x": 780,
+  "y": 320
+ },
+ {
+  "id": "oil-chip-detector-1",
+  "name": "Engine 1 Magnetic Chip Detector",
+  "system": "powerplant",
+  "ata": "79",
+  "group": "Oil",
+  "function": "Magnetic detector monitoring ferrous debris in the engine oil system.",
+  "flow": "Oil system debris → magnetic chip detector → cockpit maintenance indication.",
+  "relationships": "Discrete maintenance indication; detection does not by itself command an automatic engine shutdown.",
+  "specs": [
+   "ATA 79",
+   "Magnetic debris detection"
+  ],
+  "controls": "Maintenance indication / chip fault.",
+  "x": 800,
+  "y": 350
+ },
+ {
+  "id": "oil-chip-detector-2",
+  "name": "Engine 2 Magnetic Chip Detector",
+  "system": "powerplant",
+  "ata": "79",
+  "group": "Oil",
+  "function": "Magnetic detector monitoring ferrous debris in the engine oil system.",
+  "flow": "Oil system debris → magnetic chip detector → cockpit maintenance indication.",
+  "relationships": "Discrete maintenance indication; detection does not by itself command an automatic engine shutdown.",
+  "specs": [
+   "ATA 79",
+   "Magnetic debris detection"
+  ],
+  "controls": "Maintenance indication / chip fault.",
+  "x": 820,
+  "y": 350
+ },
+ {
+  "id": "oil-indications",
+  "name": "Engine Oil Indications",
+  "system": "powerplant",
+  "ata": "79",
+  "group": "Indicating",
+  "function": "Provides oil quantity, pressure, temperature and low-pressure/bypass status indications.",
+  "flow": "Oil tank/system sensing units → cockpit oil quantity/pressure/temperature indications and warning circuits.",
+  "relationships": "Separate feedback branches from the physical oil circulation loop.",
+  "specs": [
+   "Quantity",
+   "Pressure",
+   "Temperature",
+   "Low-pressure warning",
+   "Filter bypass warning"
+  ],
+  "controls": "Oil Temperature and Pressure circuit breaker; cockpit indicators/warnings.",
+  "x": 790,
+  "y": 340
+ },
+ {
+  "id": "starter-source",
+  "name": "Pneumatic Start Air Sources",
+  "system": "powerplant",
+  "ata": "80",
+  "group": "Starting",
+  "function": "Provides the low-pressure air sources used to rotate the engine during starting.",
+  "flow": "APU bleed OR ground pneumatic source OR operating-engine cross-bleed → pneumatic manifold → starter valve.",
+  "relationships": "Source selection belongs to the pneumatic/start interface; the starter itself remains a pneumatic load, not an AC electrical load.",
+  "specs": [
+   "APU",
+   "Ground air",
+   "Cross-bleed"
+  ],
+  "controls": "Engine start switches plus pneumatic/bleed controls required for the selected source.",
+  "x": 800,
+  "y": 360
+ },
+ {
+  "id": "engine-installation",
+  "name": "Engine Installation / Nacelle Interface",
+  "system": "powerplant",
+  "ata": "71",
+  "group": "Installation",
+  "function": "Represents the aircraft-to-engine installation interface, including nacelle/cowl access and system interfaces.",
+  "flow": "Structural and system interface node; not a fluid or electrical flow stage.",
+  "relationships": "Interfaces with engine controls, bleed, fuel, hydraulic, electrical, exhaust and thrust-reverser systems.",
+  "specs": [
+   "ATA 71 installation interface"
+  ],
+  "controls": "Maintenance/access interfaces rather than a normal cockpit control.",
+  "x": 810,
+  "y": 380
+ },
+ {
+  "id": "gs-pump",
+  "name": "Hydraulic Ground Servicing Pump",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Servicing",
+  "function": "Hand pump used during ground hydraulic fluid servicing.",
+  "flow": "Draws fluid from the central servicing supply and discharges through the servicing filter into the shared reservoir fill/balance lines.",
+  "relationships": "Ground servicing fills System A, System B, and Standby reservoirs through the shared balance manifold; it is separate from ground hydraulic power/interconnect pressure.",
+  "specs": [
+   "Manual",
+   "Low pressure only"
+  ],
+  "controls": "None.",
+  "x": 690,
+  "y": 300
+ },
+ {
+  "id": "gs-filter",
+  "name": "Hydraulic Servicing Filter",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Servicing",
+  "function": "Filters hydraulic fluid during ground servicing.",
+  "flow": "Downstream of the ground servicing pump and pressure-fill port, upstream of the shared reservoir fill/balance manifold.",
+  "relationships": "Protects System A, System B, and Standby reservoirs equally during fluid servicing.",
+  "specs": [
+   "0.4–3 micron"
+  ],
+  "controls": "None.",
+  "x": 710,
+  "y": 318
+ },
+ {
+  "id": "gpm",
+  "name": "Hydraulic Ground Power Modular Unit",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Servicing",
+  "function": "Pressure/return QDs so a ground cart can power systems without engines or electric pumps.",
+  "flow": "External pressure into System B; with ground interconnect open, pressure extends to A.",
+  "relationships": "Used with the ground interconnect valve.",
+  "specs": [
+   "External ~3000 psi"
+  ],
+  "controls": "Used with GROUND INTERCONNECT.",
+  "x": 728,
+  "y": 292
+ },
+ {
+  "id": "giv",
+  "name": "Ground Interconnect Valve",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Servicing",
+  "function": "Motor-driven valve connecting A and B pressure lines for ground testing.",
+  "flow": "Normally closed; interlocked via parking brake relay. Internal check prevents A from pressurizing B. Prohibited in flight.",
+  "relationships": "Enables single-source ground pressurization of both systems.",
+  "specs": [
+   "28V DC motor",
+   "3000 psi"
+  ],
+  "controls": "GROUND INTERCONNECT OPEN/CLOSE. Manual override on the valve. CB on P6.",
+  "x": 748,
+  "y": 318
+ },
+ {
+  "id": "edp-a",
+  "name": "System A Engine-Driven Pump",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System A",
+  "function": "Variable-displacement, pressure-compensated pump providing primary 3000 psi for System A.",
+  "flow": "Reservoir → supply shutoff → pump → pressure filter → System A module. Pump case drain → No. 1 fuel-tank heat exchanger → reservoir.",
+  "relationships": "Driven by both engine accessory gearboxes. Needs ~40–47 psi reservoir head.",
+  "specs": [
+   "Engine gearbox",
+   "~22 gpm @ 3000 psi"
+  ],
+  "controls": "ENG 1 / ENG 2 HYD PUMP. Low pressure lights below ~1200 psi.",
+  "x": 500,
+  "y": 210
+ },
+ {
+  "id": "a-pressure-filter-1",
+  "name": "System A Pressure Filter — Engine 1",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System A",
+  "function": "Filters pressure fluid downstream of the No. 1 engine-driven hydraulic pump before entry to the System A module.",
+  "flow": "ENG 1 EDP → pressure filter → System A module.",
+  "relationships": "Protects the System A module and downstream hydraulic users from pump-side contamination.",
+  "specs": [
+   "Pressure-side filter",
+   "Pump outlet"
+  ],
+  "controls": "None; maintenance inspection.",
+  "x": 585,
+  "y": 220
+ },
+ {
+  "id": "a-pressure-filter-2",
+  "name": "System A Pressure Filter — Engine 2",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System A",
+  "function": "Filters pressure fluid downstream of the No. 2 engine-driven hydraulic pump before entry to the System A module.",
+  "flow": "ENG 2 EDP → pressure filter → System A module.",
+  "relationships": "Protects the System A module and downstream hydraulic users from pump-side contamination.",
+  "specs": [
+   "Pressure-side filter",
+   "Pump outlet"
+  ],
+  "controls": "None; maintenance inspection.",
+  "x": 585,
+  "y": 245
+ },
+ {
+  "id": "res-a",
+  "name": "System A Hydraulic Reservoir",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System A",
+  "function": "Stores and conditions System A fluid with bleed-air pressurization.",
+  "flow": "Feeds engine pumps via shutoffs; receives main system return through the return filter. Pump case-drain fluid is cooled in the No. 1 fuel-tank heat exchanger before reservoir return.",
+  "relationships": "Tied to B and Standby reservoirs through the shared pneumatic pressurization and fluid servicing balance lines.",
+  "specs": [
+   "4.1 US gal",
+   "40–47 psi bleed",
+   "HX in No. 1 tank"
+  ],
+  "controls": "Quantity transmitter to the FO hydraulic quantity indicator.",
+  "x": 760,
+  "y": 210
+ },
+ {
+  "id": "mod-a",
+  "name": "Hydraulic System A Module Unit",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System A",
+  "function": "Left wheel-well manifold: filters, relief, low-pressure switches, check valves.",
+  "flow": "Consolidates both engine-pump outputs and distributes System A hydraulic pressure to its assigned users.",
+  "relationships": "Primary power for landing gear and reversers.",
+  "specs": [
+   "Passive manifold",
+   "3000 psi",
+   "Left main wheel well"
+  ],
+  "controls": "Monitored via low-pressure lights and quantity.",
+  "x": 640,
+  "y": 305
+ },
+ {
+  "id": "fire-sov",
+  "name": "Hydraulic Supply Fire Shutoff Valve",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System A",
+  "function": "Motor-driven sliding gate isolating fluid to the engine nacelle in a fire.",
+  "flow": "Between System A reservoir suction and the engine-driven pump inlet.",
+  "relationships": "Actuated by the engine fire handle with fuel and pneumatic shutoffs.",
+  "specs": [
+   "28V DC motor",
+   "Low-pressure suction"
+  ],
+  "controls": "ENG 1 / ENG 2 FIRE handles. Visual OPEN/CLOSED on the valve.",
+  "x": 535,
+  "y": 188
+ },
+ {
+  "id": "ret-a",
+  "name": "System A Return Filter",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System A",
+  "function": "Filters return fluid before reservoir re-entry, with auto-bypass.",
+  "flow": "Main System A return, immediately upstream of the reservoir.",
+  "relationships": "Final conditioning stage for A.",
+  "specs": [
+   "Internal bypass",
+   "ΔP indicator"
+  ],
+  "controls": "Pop-up ΔP button on the filter head.",
+  "x": 780,
+  "y": 232
+ },
+ {
+  "id": "res-b",
+  "name": "System B Hydraulic Reservoir",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System B",
+  "function": "Stores fluid for System B electric pumps. Heat exchanger in tank No. 2.",
+  "flow": "Supplies B AC pumps; receives return via filter and fuel-tank HX.",
+  "relationships": "Complements A; shares reservoir pressurization manifold.",
+  "specs": [
+   "1.3 US gal",
+   "40–47 psi",
+   "HX in No. 2 tank"
+  ],
+  "controls": "Cockpit hydraulic quantity indicating system.",
+  "x": 760,
+  "y": 268
+ },
+ {
+  "id": "emp-b",
+  "name": "System B Electric Motor-Driven Pumps",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System B",
+  "function": "Two 115V AC pumps providing 3000 psi for B loads (brakes, flight-control backup).",
+  "flow": "B reservoir → pumps → B distribution.",
+  "relationships": "Primary B source; redundant with A for many flight controls.",
+  "specs": [
+   "115V AC",
+   "~3000 psi"
+  ],
+  "controls": "ELEC 1 / ELEC 2 HYD PUMP. Low pressure lights.",
+  "x": 700,
+  "y": 248
+ },
+ {
+  "id": "mod-b",
+  "name": "System B Module Unit",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "System B",
+  "function": "Right wheel-well manifold for B protective and sensing components.",
+  "flow": "Receives System B pressure from the two electric pump outlets through the System B pressure manifold, then distributes it to the primary flight-control module, outboard flight spoilers, and main-wheel outboard brakes.",
+  "relationships": "B equivalent of the A module.",
+  "specs": [
+   "3000 psi",
+   "Right main wheel well"
+  ],
+  "controls": "ELEC 1/2 LOW PRESSURE lights. SYSTEM A-B PRESSURE CB on P6.",
+  "x": 640,
+  "y": 215
+ },
+ {
+  "id": "stby-pump",
+  "name": "Standby Hydraulic Pump",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Standby",
+  "function": "Electric pump providing backup ~3000 psi for rudder and LE flaps/slats when A is lost.",
+  "flow": "Standby reservoir → pump → standby network on auto or manual activation.",
+  "relationships": "AUTO with System A low pressure. Serves flight-control essential users.",
+  "specs": [
+   "115V AC",
+   "~3000 psi"
+  ],
+  "controls": "STANDBY HYD PUMP AUTO/ON/OFF. STBY RUD ON light. CBs C847/C848.",
+  "x": 690,
+  "y": 268
+ },
+ {
+  "id": "stby-res",
+  "name": "Standby Hydraulic Reservoir",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Standby",
+  "function": "Dedicated reservoir for the standby electric pump and ground servicing fill path.",
+  "flow": "Ground servicing pump → servicing filter → shared fill/balance manifold → standby reservoir → standby pump; receives direct standby-load return.",
+  "relationships": "Filled and pressurized through the common A/B/Standby reservoir interfaces described in ATA 29.",
+  "specs": [
+   "Dedicated standby reservoir"
+  ],
+  "controls": "Common hydraulic quantity indicating.",
+  "x": 780,
+  "y": 255
+ },
+ {
+  "id": "stby-mod",
+  "name": "Standby Hydraulic Modular Unit",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Standby",
+  "function": "Aft wheel-well manifold for standby relief, filters, and low-pressure switch.",
+  "flow": "Between standby pump and rudder / LE device actuators. ~2900 ± 100 psi.",
+  "relationships": "Standby users: rudder and leading-edge flaps/slats.",
+  "specs": [
+   "Passive",
+   "~2900 ± 100 psi"
+  ],
+  "controls": "Low-pressure sensing to cockpit indications.",
+  "x": 668,
+  "y": 338
+ },
+ {
+  "id": "res-reg",
+  "name": "Reservoir Pressurization Regulator",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Pressurization",
+  "function": "Regulates engine bleed air used to pressurize all three hydraulic reservoirs and maintain positive pump inlet head.",
+  "flow": "Engine bleed → air filter → pressure regulator → common reservoir pressurization manifold → A / B / Standby reservoirs.",
+  "relationships": "Common pneumatic supply for all three hydraulic systems; separate from the hydraulic-fluid servicing manifold.",
+  "specs": [
+   "~40–47 psi",
+   "Engine bleed"
+  ],
+  "controls": "Automatic.",
+  "x": 800,
+  "y": 198
+ },
+ {
+  "id": "hyd-res-press-relief",
+  "name": "Hydraulic Reservoir Pressurization Relief Valve",
+  "system": "hydraulics",
+  "ata": "29",
+  "group": "Pressurization",
+  "function": "Protects the common reservoir pressurization manifold and all three hydraulic reservoirs from excessive air pressure.",
+  "flow": "Reservoir pressurization manifold → relief valve → vent when pressure exceeds the protected limit.",
+  "relationships": "Final safety device in the common A/B/Standby reservoir pressurization system.",
+  "specs": [
+   "Pressure relief",
+   "Common manifold protection"
+  ],
+  "controls": "Automatic; no dedicated cockpit control.",
+  "x": 760,
+  "y": 335
+ },
+ {
+  "id": "air-cleaner",
+  "name": "Inertial Air Cleaner",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cleaning",
+  "function": "Removes dust and sand from engine bleed air before pneumatic distribution.",
+  "flow": "Engine bleed → precooler → inertial air cleaner → clean air to pneumatic manifold; collected particles to purge circuit.",
+  "relationships": "Purge branch is separate from the conditioned-air path and exhausts through the ram/turbofan exhaust system.",
+  "specs": [
+   "Inertial separator",
+   "Bleed-air cleaning"
+  ],
+  "controls": "Automatic purge operation.",
+  "x": 520,
+  "y": 160
+ },
+ {
+  "id": "hot-bypass",
+  "name": "Hot-Air Bypass Duct",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Temperature control",
+  "function": "Provides warm bypass air around the air-cycle cooling path for temperature mixing.",
+  "flow": "Pack valve / mix valve bypass branch → mixing chamber.",
+  "relationships": "Parallel to the ACM cooling path; it is not routed through the ACM compressor or turbine.",
+  "specs": [
+   "Pneumatic",
+   "Hot-air bypass"
+  ],
+  "controls": "Air Mix Valve / temperature-control logic.",
+  "x": 640,
+  "y": 220
+ },
+ {
+  "id": "mixing-chamber",
+  "name": "Mixing Chamber",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Distribution",
+  "function": "Combines cooled air and hot bypass air before cabin distribution.",
+  "flow": "Water separator cold-air output + hot-air bypass → mixing chamber → main distribution manifold.",
+  "relationships": "Downstream of the Air Mix Valve and upstream of the main distribution manifold.",
+  "specs": [
+   "Pneumatic",
+   "Temperature mixing"
+  ],
+  "controls": "Temperature-control system regulates the mix upstream.",
+  "x": 720,
+  "y": 240
+ },
+ {
+  "id": "pack-valve",
+  "name": "Pack Valve",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Flow",
+  "function": "Pneumatically-driven, electrically-controlled shutoff/flow-control into each pack.",
+  "flow": "Manifold → pack valve (venturi-scheduled) → hot-air duct → mix valve / ACM. Closure drives mix valve full cold.",
+  "relationships": "Downstream of engine or APU bleed. Higher flow scheduled on APU bleed. Output is cabin inflow.",
+  "specs": [
+   "28V DC solenoid + pneumatic",
+   "Inlet 40–46 psi",
+   "APU high-flow"
+  ],
+  "controls": "L PACK / R PACK on P5-10. PACK TRIP OFF → MASTER CAUTION + AIR COND.",
+  "x": 560,
+  "y": 200
+ },
+ {
+  "id": "ground-conditioned-air",
+  "name": "Ground Service Conditioned-Air Connection",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Ground service",
+  "function": "Supplies conditioned air directly to the main distribution manifold when the airplane air-conditioning packs are off.",
+  "flow": "Ground conditioned-air cart → service connection/check valve → main distribution manifold → control and passenger cabins.",
+  "relationships": "Check valve closes when aircraft pack air is supplying the manifold.",
+  "specs": [
+   "ATA 21-21",
+   "Ground service"
+  ],
+  "controls": "Trainer ground-service connection",
+  "x": 520,
+  "y": 232
+ },
+ {
+  "id": "iso-valve",
+  "name": "Engine Bleed Isolation Valve",
+  "system": "aircond",
+  "ata": "36",
+  "group": "Flow",
+  "function": "Connects or isolates left and right pneumatic manifolds.",
+  "flow": "In the cross-manifold duct. OPEN/AUTO cross-feeds; CLOSE isolates. Normal is AUTO.",
+  "relationships": "Interlocks with BLEED 1/2 and APU BLEED. DUAL BLEED guards dual-source mistakes.",
+  "specs": [
+   "28V DC motor",
+   "40–46 psi"
+  ],
+  "controls": "ISOLATION VALVE OPEN/AUTO/CLOSE on P5-10. DUAL BLEED light.",
+  "x": 600,
+  "y": 248
+ },
+ {
+  "id": "purge",
+  "name": "Air Cleaner Purge Valve",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cleaning",
+  "function": "Vents dust/sand collected by the inertial cleaner into the ram exhaust.",
+  "flow": "Downstream of the precooler. Opens on engine bleed on the ground or with flaps extended.",
+  "relationships": "Shares control and exhaust ducting with the turbofan/ram system.",
+  "specs": [
+   "28V DC solenoid"
+  ],
+  "controls": "Automatic. TURBOFAN VALVE CB on P6. Mechanical position indicator.",
+  "x": 545,
+  "y": 178
+ },
+ {
+  "id": "hx",
+  "name": "Primary & Secondary Heat Exchangers",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cooling",
+  "function": "Air-to-air exchangers cooling bleed with ram air (flight) or turbofan air (ground).",
+  "flow": "Primary before ACM compressor; secondary after compressor, before the turbine.",
+  "relationships": "Blockage shows up as high supply-duct temperature.",
+  "specs": [
+   "Passive",
+   "Ram or turbofan air"
+  ],
+  "controls": "Monitored via SUPPLY DUCT on AIR TEMP selector P5-17.",
+  "x": 575,
+  "y": 268
+ },
+ {
+  "id": "acm",
+  "name": "Air Cycle Machine",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cooling",
+  "function": "Turbine, compressor, and fan on a common shaft — the pack’s refrigeration core.",
+  "flow": "Primary HX → compressor → secondary HX → expansion turbine → water separator.",
+  "relationships": "All pack cooling hardware exists to support or modulate ACM output.",
+  "specs": [
+   "Pneumatic",
+   "Oil sump 3/4 full"
+  ],
+  "controls": "Runs when PACK is ON with bleed available. Sump checked on the ground.",
+  "x": 595,
+  "y": 288
+ },
+ {
+  "id": "water-sep",
+  "name": "Water Separator",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cooling",
+  "function": "Removes moisture condensed after ACM expansion so water does not enter cabin ducts.",
+  "flow": "Wet cold air through the coalescer bag; water drains overboard.",
+  "relationships": "Feeds the 35°F control valve, whose sensor lives at the separator.",
+  "specs": [
+   "Passive",
+   "Gravity drain"
+  ],
+  "controls": "Red/black bag condition band — maintenance only.",
+  "x": 618,
+  "y": 268
+ },
+ {
+  "id": "coalescer",
+  "name": "Water Separator Coalescer Bag",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cooling",
+  "function": "Filter media that coalesces fine droplets so they can drain.",
+  "flow": "All cooled moist air passes through it before the 35°F valve.",
+  "relationships": "A clogged bag causes high flow readings on ground checks and poor moisture removal.",
+  "specs": [
+   "Replaceable media"
+  ],
+  "controls": "Visual band on the unit.",
+  "x": 635,
+  "y": 288
+ },
+ {
+  "id": "f35",
+  "name": "35-Degree F Control Valve",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cooling",
+  "function": "Anti-ice valve blending warm air around the separator to hold ~35°F.",
+  "flow": "Opens as separator discharge approaches freezing; modulates at equilibrium.",
+  "relationships": "Valve position (full open vs modulating) is a primary pack-efficiency diagnostic.",
+  "specs": [
+   "Self-contained pneumatic/thermal",
+   "Setpoint 35°F"
+  ],
+  "controls": "Automatic. Mechanical position indicator.",
+  "x": 652,
+  "y": 268
+ },
+ {
+  "id": "turbofan",
+  "name": "Turbofan",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cooling",
+  "function": "Air-turbine fan pulling cooling air through the heat exchangers on the ground.",
+  "flow": "Spun by high-pressure air metered through the turbofan valve; exhausts overboard.",
+  "relationships": "Paired with the turbofan valve. Makes the HX effective without ram air.",
+  "specs": [
+   "Pneumatic",
+   "Oil-lubricated"
+  ],
+  "controls": "Automatic. L/R TURBOFAN CBs on P6. Dipstick oil check.",
+  "x": 575,
+  "y": 308
+ },
+ {
+  "id": "tf-valve",
+  "name": "Turbofan Valve",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Cooling",
+  "function": "Meters duct air to spin the turbofan; closes once ram air takes over.",
+  "flow": "Opens when duct pressure is ~27–33 psi; closes as speed/ram rises.",
+  "relationships": "Shares the ram exhaust duct with the air cleaner purge valve.",
+  "specs": [
+   "28V DC solenoid over pneumatic",
+   "27–33 psi"
+  ],
+  "controls": "Automatic. TURBOFAN VALVE CB on P6.",
+  "x": 555,
+  "y": 292
+ },
+ {
+  "id": "mix-valve",
+  "name": "Air Mix Valve",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Distribution",
+  "function": "Proportions hot bleed with ACM-cold air to the selected cabin/cockpit temperature.",
+  "flow": "At the hot-bypass / cold-delivery junction. Driven full cold on pack valve closure.",
+  "relationships": "Final pack thermal element. Supplies the volume the outflow valve then meters.",
+  "specs": [
+   "28V DC/AC servo",
+   "Full COLD to HOT"
+  ],
+  "controls": "CONT CABIN / PASS CABIN selectors on P5-17. Mix valve position indicators.",
+  "x": 670,
+  "y": 248
+ },
+ {
+  "id": "outflow",
+  "name": "Cabin Pressurization Outflow Valve",
+  "system": "cabin",
+  "ata": "21",
+  "group": "Pressurization",
+  "function": "Meters cabin exhaust to control cabin altitude and differential.",
+  "flow": "AUTO / STANDBY / MAN AC / MAN DC drive the valve. Packs provide inflow; this is outflow.",
+  "relationships": "Backup is the safety relief valve. Inflow traces to pack valves and engine/APU bleed.",
+  "specs": [
+   "28V DC torque motor",
+   "Regulates ~7–7.5 psi ΔP"
+  ],
+  "controls": "MODE SELECTOR and OPEN/CLOSE on P5-6. Valve position, DIFF PRESS, cabin alt/rate. Horn ~10,000 ft.",
+  "x": 980,
+  "y": 268
+ },
+ {
+  "id": "safety-relief-l",
+  "name": "Safety Relief Valve Left",
+  "system": "cabin",
+  "ata": "21",
+  "group": "Pressurization",
+  "function": "Independent mechanical overpressure protection on the left side of the outflow valve.",
+  "flow": "Cabin differential pressure above limit → safety relief valve → overboard.",
+  "relationships": "Independent of AUTO/STANDBY/MAN outflow-valve control.",
+  "specs": [
+   "Mechanical",
+   "~8.5 psi differential"
+  ],
+  "controls": "None; mechanical relief.",
+  "x": 1000,
+  "y": 270
+ },
+ {
+  "id": "safety-relief-r",
+  "name": "Safety Relief Valve Right",
+  "system": "cabin",
+  "ata": "21",
+  "group": "Pressurization",
+  "function": "Independent mechanical overpressure protection on the right side of the outflow valve.",
+  "flow": "Cabin differential pressure above limit → safety relief valve → overboard.",
+  "relationships": "Independent of AUTO/STANDBY/MAN outflow-valve control.",
+  "specs": [
+   "Mechanical",
+   "~8.5 psi differential"
+  ],
+  "controls": "None; mechanical relief.",
+  "x": 1020,
+  "y": 290
+ },
+ {
+  "id": "negative-relief",
+  "name": "Negative / Vacuum Relief Valve",
+  "system": "cabin",
+  "ata": "21",
+  "group": "Pressurization",
+  "function": "Protects the fuselage from excessive negative cabin-to-ambient differential pressure.",
+  "flow": "Ambient pressure greater than cabin pressure → negative relief valve → cabin.",
+  "relationships": "Independent mechanical protection during rapid descent or loss of cabin air input.",
+  "specs": [
+   "Mechanical",
+   "Negative differential protection"
+  ],
+  "controls": "None; automatic spring-loaded relief.",
+  "x": 1040,
+  "y": 310
+ },
+ {
+  "id": "safety-relief",
+  "name": "Safety Relief Valve",
+  "system": "cabin",
+  "ata": "21",
+  "group": "Pressurization",
+  "function": "Spring-loaded relief protecting the fuselage if outflow control fails.",
+  "flow": "Opens ~8–8.5 psi differential, vents overboard, reseats.",
+  "relationships": "Backup to the outflow valve control loop.",
+  "specs": [
+   "Purely mechanical",
+   "Opens 8–8.5 psi"
+  ],
+  "controls": "None. Mechanical test/adjust only.",
+  "x": 1000,
+  "y": 288
+ },
+ {
+  "id": "water-tank",
+  "name": "Passenger Water Tank",
+  "system": "cabin",
+  "ata": "38",
+  "group": "Water",
+  "function": "Stores potable water for galleys and lavatory faucets.",
+  "flow": "Filled at the service panel; pressurized by No. 1 engine bleed through a dedicated regulator.",
+  "relationships": "Feeds quantity transmitter, filter, and heater. Separate from the hydraulic reservoir regulator.",
+  "specs": [
+   "30–32 US gal",
+   "Low regulated bleed"
+  ],
+  "controls": "Service-panel handles. WATER QTY IND CB on P18.",
+  "x": 920,
+  "y": 300
+ },
+ {
+  "id": "qty-xmtr",
+  "name": "Water Quantity Transmitter",
+  "system": "cabin",
+  "ata": "38",
+  "group": "Water",
+  "function": "Float switches reporting Empty / 1/4 / 1/2 / 3/4 / Full.",
+  "flow": "Float in a tube energizes indicator segments.",
+  "relationships": "Sensing only — no control.",
+  "specs": [
+   "28V DC",
+   "Five levels"
+  ],
+  "controls": "Indicator on the aft right service door. WATER QTY IND CB P18.",
+  "x": 938,
+  "y": 318
+ },
+ {
+  "id": "water-filter",
+  "name": "Water Filter",
+  "system": "cabin",
+  "ata": "38",
+  "group": "Water",
+  "function": "Charcoal cartridge removing dirt, colloids, and chlorine taste from cold water.",
+  "flow": "Under the lavatory basin in the cold supply.",
+  "relationships": "Between tank and cold tap.",
+  "specs": [
+   "Replaceable charcoal"
+  ],
+  "controls": "None.",
+  "x": 905,
+  "y": 318
+ },
+ {
+  "id": "water-heater",
+  "name": "Water Heater",
+  "system": "cabin",
+  "ata": "38",
+  "group": "Water",
+  "function": "1.5-quart, 400 W heater per lavatory hot tap. Thermostat ~125°F; overheat ~190°F.",
+  "flow": "Three-probe element in a small tank; overheat switch is manually reset.",
+  "relationships": "Hot side of the same plumbing the filter conditions on the cold side.",
+  "specs": [
+   "115V AC 400 W",
+   "1.5 qt",
+   "~125°F"
+  ],
+  "controls": "Heater ON/OFF and amber light on the tank. LAVATORY WATER HEATER CB P18.",
+  "x": 888,
+  "y": 300
+ },
+ {
+  "id": "flush-motor",
+  "name": "Toilet Flush Motor",
+  "system": "cabin",
+  "ata": "38",
+  "group": "Waste",
+  "function": "Combined motor, pump, and filter that flushes the bowl.",
+  "flow": "Timer-commanded impeller draws ~2 gal from the waste tank through a filter and the flush ring.",
+  "relationships": "Runs only when the toilet timer powers it.",
+  "specs": [
+   "115V AC",
+   "~2 gal/cycle"
+  ],
+  "controls": "LAV FLUSH MOTOR CB on P18 (one per lav).",
+  "x": 860,
+  "y": 318
+ },
+ {
+  "id": "toilet-timer",
+  "name": "Toilet Timer",
+  "system": "cabin",
+  "ata": "38",
+  "group": "Waste",
+  "function": "Electromechanical timer that powers the flush motor for 10 ± 2 seconds.",
+  "flow": "Flush handle ~15° actuates the timer, which then feeds 115V AC to the motor.",
+  "relationships": "Between handle and motor.",
+  "specs": [
+   "115V AC switched",
+   "10 ± 2 s"
+  ],
+  "controls": "Shares LAV FLUSH MOTOR CB.",
+  "x": 842,
+  "y": 300
+ },
+ {
+  "id": "waste-tank",
+  "name": "Toilet Waste Tank",
+  "system": "cabin",
+  "ata": "38",
+  "group": "Waste",
+  "function": "Holds waste and flush fluid; one-piece bowl/tank.",
+  "flow": "Drains via a cable-actuated service-panel handle to a ground cart.",
+  "relationships": "Reservoir the flush motor draws from and returns to.",
+  "specs": [
+   "Unpowered tank"
+  ],
+  "controls": "Mechanical cable. Open LAV FLUSH MOTOR CB while servicing.",
+  "x": 820,
+  "y": 318
+ },
+ {
+  "id": "psu",
+  "name": "Passenger Service Unit",
+  "system": "cabin",
+  "ata": "25",
+  "group": "Cabin",
+  "function": "Overhead unit with reading lights, attendant call, oxygen masks, and gaspers.",
+  "flow": "Passenger-switched lights/call; oxygen doors on barometric drop or crew override.",
+  "relationships": "Shares cabin lighting and oxygen architecture.",
+  "specs": [
+   "28V DC lights & call",
+   "Chemical or bottled O2"
+  ],
+  "controls": "Passenger switches. Oxygen auto or flight-deck override.",
+  "x": 820,
+  "y": 210
+ },
+ {
+  "id": "windows",
+  "name": "Passenger Cabin Windows",
+  "system": "cabin",
+  "ata": "56",
+  "group": "Structure",
+  "function": "Dual acrylic panes containing cabin differential while providing visibility.",
+  "flow": "Breather hole in the middle pane manages interpane pressure.",
+  "relationships": "Must hold the same ΔP the outflow and safety valves regulate.",
+  "specs": [
+   "Rated to full cabin ΔP"
+  ],
+  "controls": "None.",
+  "x": 780,
+  "y": 188
+ },
+ {
+  "id": "sliding-win",
+  "name": "Window No. 2 (Pilot Sliding Window)",
+  "system": "cabin",
+  "ata": "56",
+  "group": "Flight deck",
+  "function": "Hand-operated sliding side window for ground ventilation, lookout, and emergency egress, with a 28V heater.",
+  "flow": "Locking handle; heater independent of the sliding function.",
+  "relationships": "Distinct from fixed cabin windows.",
+  "specs": [
+   "Mechanical + 28V DC heat"
+  ],
+  "controls": "Window heat CBs — no dedicated sliding-window switch.",
+  "x": 168,
+  "y": 228
+ },
+ {
+  "id": "fc-mod",
+  "name": "Flight Controls Hydraulic Modular Package",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Supply",
+  "function": "Wheel-well manifold housing flight-control and spoiler shutoff valves, compensator, check, and low-pressure switch.",
+  "flow": "A/B pressure → FC shutoff to aileron/elevator/rudder and spoiler shutoff to flight spoilers. Return through compensator (gust damper residual).",
+  "relationships": "All hydraulic flight-control actuators depend on package activation. Adjacent to A/B module units.",
+  "specs": [
+   "28V DC over 3000 psi",
+   "Low press ~1200 ± 350 psi"
+  ],
+  "controls": "FLIGHT CONTROLS A/B & SPOILER A/B on P5-3. LOW PRESSURE lights + MASTER CAUTION.",
+  "x": 620,
+  "y": 330
+ },
+ {
+  "id": "aileron",
+  "name": "Aileron",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Roll",
+  "function": "Hinged wingtip surfaces providing primary roll, deflecting symmetrically opposite.",
+  "flow": "Control wheel → cables → dual-powered PCUs → surface. Balance tabs refine feel.",
+  "relationships": "Same wheel input commands flight spoilers for roll augmentation.",
+  "specs": [
+   "Hyd A & B PCU",
+   "~3000 psi"
+  ],
+  "controls": "Control wheel; gated by FLIGHT CONTROLS A/B.",
+  "x": 780,
+  "y": 48
+ },
+ {
+  "id": "flt-spoiler",
+  "name": "Flight Spoiler",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Roll",
+  "function": "Four upper-wing panels for roll assist or symmetric speed-brake drag.",
+  "flow": "Hydraulic actuator from aileron system and/or speed-brake lever.",
+  "relationships": "Gated by spoiler shutoff valves. On ground with lever full up, 2/3/6/7 match ground spoilers.",
+  "specs": [
+   "A: spoilers 3,6 · B: 2,7",
+   "Float ≤ 2.5° up"
+  ],
+  "controls": "SPOILER A/B and speed-brake lever.",
+  "x": 700,
+  "y": 78
+ },
+ {
+  "id": "gnd-sp-valve",
+  "name": "Ground Spoiler Actuator Valve",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Ground spoilers",
+  "function": "Controls Hyd A flow to ground spoilers for lift dump on landing or RTO.",
+  "flow": "Armed via speed-brake ARMED → deploys on WOW or lever UP.",
+  "relationships": "In series with the ground spoiler interlock valve (prevents in-flight deploy).",
+  "specs": [
+   "Hyd A ~3000 psi"
+  ],
+  "controls": "SPEED BRAKE ARMED light; speed-brake lever.",
+  "x": 680,
+  "y": 108
+ },
+ {
+  "id": "gnd-sp-18",
+  "name": "No. 1 and No. 8 Ground Spoilers",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Ground spoilers",
+  "function": "Outermost ground-only panels dumping lift to maximize wheel braking.",
+  "flow": "Locked out in flight by the interlock valve.",
+  "relationships": "Work with flight spoilers and inboard ground spoilers 4 and 5.",
+  "specs": [
+   "1 & 8 → 40° ± 2°",
+   "4 & 5 → 60° ± 2°"
+  ],
+  "controls": "Automatic ground logic + speed-brake lever.",
+  "x": 760,
+  "y": 70
+ },
+ {
+  "id": "flap-pu",
+  "name": "Flap Power Unit",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Trailing edge",
+  "function": "Hydraulic motor plus electric backup on a differential gearbox driving TE flap torque tubes.",
+  "flow": "Flap lever → cables → flap control valve → hydraulic motor → torque tubes.",
+  "relationships": "Primary Hyd A, backup 115V AC electric drive.",
+  "specs": [
+   "Hyd A primary",
+   "115V AC backup"
+  ],
+  "controls": "Flap lever; ALTERNATE FLAPS ARM & POSITION on P5-3.",
+  "x": 720,
+  "y": 248
+ },
+ {
+  "id": "flap-motor",
+  "name": "Flap Hydraulic Motor",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Trailing edge",
+  "function": "Primary rotary drive inside the flap power unit.",
+  "flow": "Metered System A from the flap control valve.",
+  "relationships": "Physically combined with the electric standby motor.",
+  "specs": [
+   "Hyd A ~3000 psi"
+  ],
+  "controls": "SHUTOFF VALVES – FLAP CB on P6.",
+  "x": 738,
+  "y": 268
+ },
+ {
+  "id": "le-flap",
+  "name": "Leading Edge Flaps",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Leading edge",
+  "function": "Inboard leading-edge panels that increase camber for takeoff/landing.",
+  "flow": "Flap lever → LE flap & slat control valve → actuators. Backup from standby hydraulics.",
+  "relationships": "Synchronous with outboard LE slats and trailing-edge flaps.",
+  "specs": [
+   "Hyd A primary",
+   "Standby backup"
+  ],
+  "controls": "Flap lever; ALTERNATE FLAPS triggers standby pump.",
+  "x": 500,
+  "y": 168
+ },
+ {
+  "id": "elev-cu",
+  "name": "Elevator Control Unit",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Pitch",
+  "function": "Interfaces column, stabilizer trim, and elevator PCU inputs.",
+  "flow": "Column → ECU → A/B PCUs → elevator.",
+  "relationships": "Works with the elevator feel computer.",
+  "specs": [
+   "Mechanical commanding A/B PCUs"
+  ],
+  "controls": "Control column; FLIGHT CONTROLS A/B.",
+  "x": 1080,
+  "y": 300
+ },
+ {
+  "id": "feel",
+  "name": "Elevator Feel Computer",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Pitch",
+  "function": "Uses pitot-static q and stabilizer position to set artificial column force.",
+  "flow": "Pitot + stab position → feel computer → hydraulic feel unit → column.",
+  "relationships": "Feel scales with dynamic pressure.",
+  "specs": [
+   "Pneumatic pitot + stab position"
+  ],
+  "controls": "FEEL DIFF PRESS light on P5-3.",
+  "x": 1100,
+  "y": 318
+ },
+ {
+  "id": "gear-sel",
+  "name": "Landing Gear Selector Valve",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Extension",
+  "function": "Directs System A to retract or extend main and nose gear.",
+  "flow": "LANDING GEAR lever → cable/drum → selector quadrant → actuators, uplocks, downlocks.",
+  "relationships": "Upstream of all extension actuators. Powered only by System A.",
+  "specs": [
+   "Mechanical cable",
+   "System A 3000 psi"
+  ],
+  "controls": "LANDING GEAR lever. LEVER LATCH CB on P6.",
+  "x": 250,
+  "y": 268
+ },
+ {
+  "id": "mg-iso",
+  "name": "Main Gear Isolation Valve",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Extension",
+  "function": "Isolates left and right main-gear supply during a leak.",
+  "flow": "Two-position; normal OPEN. Closed manually in maintenance.",
+  "relationships": "Downstream of the selector, upstream of main-gear actuators.",
+  "specs": [
+   "Passive hydraulic",
+   "System A"
+  ],
+  "controls": "No cockpit switch. Lockwire on the handle stop.",
+  "x": 600,
+  "y": 355
+ },
+ {
+  "id": "mg-mod",
+  "name": "Main Gear Modular Package",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Extension",
+  "function": "Cartridge manifold (relief, check, restrictors) for main-gear servicing.",
+  "flow": "Between selector/isolation and actuating/locking mechanisms.",
+  "relationships": "Main-gear equivalent of the nose-gear modular package.",
+  "specs": [
+   "Passive",
+   "System A"
+  ],
+  "controls": "Passive.",
+  "x": 620,
+  "y": 372
+ },
+ {
+  "id": "nws-steering-wheel",
+  "name": "Captain Nose-Wheel Steering Tiller",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Steering",
+  "function": "Provides normal nose-wheel steering command.",
+  "flow": "Captain steering tiller → steering cables / metering valve → nose-wheel steering actuators.",
+  "relationships": "Primary steering input; available with nose gear down and steering system enabled.",
+  "specs": [
+   "Normal steering control",
+   "High-range steering"
+  ],
+  "controls": "Captain nose-wheel steering tiller.",
+  "x": 180,
+  "y": 285
+ },
+ {
+  "id": "nws-rudder-pedal",
+  "name": "Rudder-Pedal Nose-Wheel Steering",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Steering",
+  "function": "Provides reduced-range nose-wheel steering from rudder pedal input.",
+  "flow": "Rudder pedals → steering mechanism / cables → nose-wheel steering actuators.",
+  "relationships": "Separate reduced-range control path from the captain steering wheel.",
+  "specs": [
+   "Reduced-range steering"
+  ],
+  "controls": "Rudder pedals.",
+  "x": 200,
+  "y": 300
+ },
+ {
+  "id": "steer-dep",
+  "name": "Steering Depressurization Valve",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Steering",
+  "function": "Routes System A to nose-wheel steering when gear is down and WOW.",
+  "flow": "Interlocked with air/ground and gear position — no airborne steering.",
+  "relationships": "Tiller and rudder pedals provide the input.",
+  "specs": [
+   "Hyd A",
+   "Solenoid/mechanical interlock"
+  ],
+  "controls": "Automatic with gear down + WOW.",
+  "x": 220,
+  "y": 300
+ },
+ {
+  "id": "brk-acc",
+  "name": "Hydraulic Brakes Accumulator",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Brakes",
+  "function": "Stores pressurized fluid for reserve braking if pump pressure is lost.",
+  "flow": "Charged by System B; routes reserve via the autobrake shuttle when normal pressure drops.",
+  "relationships": "Independent of continuous pump pressure.",
+  "specs": [
+   "Charged by System B"
+  ],
+  "controls": "Brake pressure gauges on the center panel.",
+  "x": 640,
+  "y": 390
+ },
+ {
+  "id": "brk-xmtr",
+  "name": "Hydraulic Brakes Pressure Transmitter",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Brakes",
+  "function": "Converts brake-line pressure to electrical signals for the dual brake indicator.",
+  "flow": "Senses System B brake pressure.",
+  "relationships": "Center panel P2-2 indication.",
+  "specs": [
+   "28V DC",
+   "0–3000 psi"
+  ],
+  "controls": "Dual Brake Pressure Indicator.",
+  "x": 660,
+  "y": 372
+ },
+ {
+  "id": "ab-shuttle",
+  "name": "Autobrake Shuttle Valve",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Brakes",
+  "function": "Routes automatic-brake pressure into the brake circuit while preserving the manual brake path.",
+  "flow": "Autobrake pressure control module → shuttle valves → brake units through antiskid valves.",
+  "relationships": "Autobrake bypasses the pilot metering-valve command; antiskid remains in series and has priority for skid protection.",
+  "specs": [
+   "Passive",
+   "A/B 3000 psi"
+  ],
+  "controls": "Automatic.",
+  "x": 680,
+  "y": 390
+ },
+ {
+  "id": "ab-mod",
+  "name": "Autobrake Pressure Control Module",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Brakes",
+  "function": "Meters pressure to the selected automatic deceleration rate, including RTO.",
+  "flow": "Cockpit selector → module → shuttle valves.",
+  "relationships": "Works with anti-skid.",
+  "specs": [
+   "Hydraulic + electronic",
+   "Multiple rates + RTO"
+  ],
+  "controls": "AUTOBRAKE selector on the center panel.",
+  "x": 700,
+  "y": 372
+ },
+ {
+  "id": "antiskid-t",
+  "name": "Anti-Skid Transducer",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Brakes",
+  "function": "Wheel-speed transducers on each braked wheel.",
+  "flow": "Electrical signal proportional to wheel speed → anti-skid control unit.",
+  "relationships": "Primary input for lock-up detection.",
+  "specs": [
+   "Self-gen / 28V sensing"
+  ],
+  "controls": "ANTISKID status. Failure via master caution.",
+  "x": 580,
+  "y": 400
+ },
+ {
+  "id": "antiskid-v",
+  "name": "Anti-Skid Control Valve",
+  "system": "landinggear",
+  "ata": "32",
+  "group": "Brakes",
+  "function": "Modulates automatic or manual brake pressure to prevent wheel lock/skid.",
+  "flow": "Brake pressure command → antiskid valve → wheel brake; antiskid can override automatic-brake pressure.",
+  "relationships": "Both inboard and outboard antiskid channels must be operative for autobrake operation.",
+  "specs": [
+   "28V DC + hydraulic"
+  ],
+  "controls": "INBD / OUTBD ANTISKID switches on P2-2.",
+  "x": 600,
+  "y": 418
+ },
+ {
+  "id": "eng-antiice-valve",
+  "name": "Engine Anti-Ice Valve",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Engine anti-ice",
+  "function": "Controls pneumatic thermal anti-ice air supplied to the engine inlet/nose-dome anti-ice system.",
+  "flow": "Engine compressor bleed air → anti-ice valve/control → engine inlet/nose-dome internal ducting → anti-ice exhaust.",
+  "relationships": "Separate from wing anti-ice. Controlled by the ENG ANTI-ICE switch; valve position is indicated by ANTI-ICE VALVE OPEN.",
+  "specs": [
+   "Pneumatic thermal anti-ice",
+   "Engine bleed air source"
+  ],
+  "controls": "ENG ANTI-ICE switch on P5; ANTI-ICE VALVE OPEN indication.",
+  "x": 1220,
+  "y": 120
+ },
+ {
+  "id": "wing-antiice-l",
+  "name": "Left Wing Anti-Ice Valve / Thermal System",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Wing anti-ice",
+  "function": "Controls thermal anti-ice air to the left wing leading-edge anti-ice system.",
+  "flow": "Pneumatic manifold → left wing anti-ice valve → left wing thermal anti-ice ducts/surfaces.",
+  "relationships": "Has separate valve-open indication and thermal feedback; does not form a series path with the right wing system.",
+  "specs": [
+   "Pneumatic thermal anti-ice",
+   "Left wing branch"
+  ],
+  "controls": "WING ANTI-ICE switch; left VALVE OPEN indication.",
+  "x": 1480,
+  "y": 180
+ },
+ {
+  "id": "wing-antiice-r",
+  "name": "Right Wing Anti-Ice Valve / Thermal System",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Wing anti-ice",
+  "function": "Controls thermal anti-ice air to the right wing leading-edge anti-ice system.",
+  "flow": "Pneumatic manifold → right wing anti-ice valve → right wing thermal anti-ice ducts/surfaces.",
+  "relationships": "Has separate valve-open indication and thermal feedback; does not form a series path with the left wing system.",
+  "specs": [
+   "Pneumatic thermal anti-ice",
+   "Right wing branch"
+  ],
+  "controls": "WING ANTI-ICE switch; right VALVE OPEN indication.",
+  "x": 1480,
+  "y": 300
+ },
+ {
+  "id": "wing-antiice-feedback",
+  "name": "Wing Anti-Ice Thermal Feedback",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Control / feedback",
+  "function": "Provides thermal status feedback for wing anti-ice control logic.",
+  "flow": "Wing thermal switch/sensor → anti-ice control/feedback logic.",
+  "relationships": "Feedback path only; it is not in the pneumatic airflow path.",
+  "specs": [
+   "Thermal feedback",
+   "Control logic input"
+  ],
+  "controls": "Automatic system feedback.",
+  "x": 1740,
+  "y": 240
+ },
+ {
+  "id": "pitot-tat-protection",
+  "name": "Pitot / Static / TAT Ice Protection",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Probe protection",
+  "function": "Protects critical air-data probe and port areas from icing; modeled independently from wing/engine bleed-air paths.",
+  "flow": "Electrical/thermal protection and air-data sensing remain separate from the wing and engine pneumatic anti-ice branches.",
+  "relationships": "Feeds/affects air-data sensing rather than acting as a downstream pneumatic load.",
+  "specs": [
+   "Pitot / static / TAT protection",
+   "Air-data interface"
+  ],
+  "controls": "System-dependent; status represented separately from thermal bleed-air flow.",
+  "x": 1480,
+  "y": 430
+ },
+ {
+  "id": "pneumatic-manifold",
+  "name": "Bleed-Air Pneumatic Manifold",
+  "system": "pneumatic",
+  "ata": "36",
+  "group": "Distribution",
+  "function": "Receives conditioned engine/APU bleed air and distributes it to approved pneumatic users.",
+  "flow": "Engine/APU bleed sources → isolation/manifold → pack and starter users.",
+  "relationships": "Isolation-valve logic selects the manifold arrangement; sources must not be treated as a single undifferentiated switch.",
+  "specs": [
+   "ATA 36",
+   "Trainer flow-pressure model"
+  ],
+  "controls": "BLEED / ISOLATION / APU BLEED",
+  "x": 1820,
+  "y": 470
+ },
+ {
+  "id": "pneumatic-isolation-valve",
+  "name": "Pneumatic Isolation Valve",
+  "system": "pneumatic",
+  "ata": "36",
+  "group": "Distribution control",
+  "function": "Controls interconnection between left and right bleed-air manifolds.",
+  "flow": "Left manifold ↔ isolation valve ↔ right manifold.",
+  "relationships": "AUTO mode is governed by the bleed/pack switch configuration; the switch, not an inferred valve position, is the command authority.",
+  "specs": [
+   "ATA 36-11",
+   "OPEN / AUTO / CLOSE"
+  ],
+  "controls": "ISOLATION VALVE",
+  "x": 1820,
+  "y": 510
+ },
+ {
+  "id": "bleed-precooler",
+  "name": "Bleed-Air Precooler Assembly",
+  "system": "pneumatic",
+  "ata": "36",
+  "group": "Temperature control",
+  "function": "Reduces hot compressor bleed-air temperature before manifold distribution using fan air.",
+  "flow": "Engine bleed takeoff → precooler → bleed manifold.",
+  "relationships": "Bleed pressure and overheat logic depend on source condition and cooling path; this is a training-level representation.",
+  "specs": [
+   "ATA 36",
+   "Thermal control path"
+  ],
+  "controls": "Engine bleed and precooler control logic",
+  "x": 1820,
+  "y": 550
+ },
+ {
+  "id": "bleed-pressure-indication",
+  "name": "Pneumatic Duct Pressure Indication",
+  "system": "pneumatic",
+  "ata": "36",
+  "group": "Indication",
+  "function": "Displays available bleed-manifold pressure for start-air and air-conditioning training.",
+  "flow": "Pressure sensing point → cockpit indication.",
+  "relationships": "Indication must respond to modeled source pressure and the relevant electrical supply.",
+  "specs": [
+   "ATA 36-21",
+   "Trainer-scaled psi"
+  ],
+  "controls": "DUCT PRESS gauges",
+  "x": 1820,
+  "y": 590
+ },
+ {
+  "id": "generator-drive-1",
+  "name": "No. 1 Generator Drive / CSD",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "Generator drive",
+  "function": "Models the engine accessory drive and generator-drive disconnect for the No. 1 electrical source.",
+  "flow": "Engine accessory gearbox → CSD/drive → generator → generator breaker.",
+  "relationships": "DISC operates a separate drive-disconnect state and does not silently reset the GEN switch; oil-pressure and oil-temperature indications are separate paths.",
+  "specs": [
+   "ATA 24-11-01",
+   "WDM subject includes disconnect solenoid"
+  ],
+  "controls": "GEN DRIVE DISC 1",
+  "x": 1840,
+  "y": 650
+ },
+ {
+  "id": "generator-drive-2",
+  "name": "No. 2 Generator Drive / CSD",
+  "system": "powerplant",
+  "ata": "24",
+  "group": "Generator drive",
+  "function": "Models the engine accessory drive and generator-drive disconnect for the No. 2 electrical source.",
+  "flow": "Engine accessory gearbox → CSD/drive → generator → generator breaker.",
+  "relationships": "DISC operates a separate drive-disconnect state; oil indications are modeled separately from generator-bus power.",
+  "specs": [
+   "ATA 24-11-01",
+   "Trainer-level oil dynamics"
+  ],
+  "controls": "GEN DRIVE DISC 2",
+  "x": 1840,
+  "y": 685
+ },
+ {
+  "id": "recirc-fan",
+  "name": "Cabin Recirculation / Gasper Fan",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Air distribution",
+  "function": "Provides a modeled recirculation contribution when selected and AC power is available.",
+  "flow": "Cabin return air → fan → cabin air distribution.",
+  "relationships": "Fan power/load and airflow contribution are separate from pack valve selection; failure removes the contribution.",
+  "specs": [
+   "ATA 21-24 / 21-26",
+   "Trainer airflow fraction"
+  ],
+  "controls": "RECIRC / GASPER FAN",
+  "x": 1840,
+  "y": 720
+ },
+ {
+  "id": "equipment-cooling-blowers",
+  "name": "Equipment Cooling Supply / Exhaust Blowers",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Equipment cooling",
+  "function": "Models the electrical power and failure state of the supply and exhaust cooling blower paths.",
+  "flow": "Cabin/equipment-space air → supply blower → avionics/equipment flow path → exhaust blower.",
+  "relationships": "Supply and exhaust selectors are maintained independently; NORM/ALTN are not interpreted as OFF.",
+  "specs": [
+   "ATA 21-58-01",
+   "Trainer blower-failure input"
+  ],
+  "controls": "EQUIP COOLING SUPPLY / EXHAUST",
+  "x": 1840,
+  "y": 755
+ },
+ {
+  "id": "air-mix-valve-cont",
+  "name": "Continuous-Cabin Air Mix Valve",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Temperature control",
+  "function": "Stores a continuous manual mix position for the control-cabin air-mix valve.",
+  "flow": "Pack cooling path + hot bypass → left/control-cabin mix valve → distribution.",
+  "relationships": "AUTO uses the simplified regulator schedule; MANUAL uses the stored position; a valve-jam fault freezes the effective position.",
+  "specs": [
+   "ATA 21-61 / 21-67",
+   "Position 0–1 trainer scale"
+  ],
+  "controls": "CONT CABIN AIR MIX",
+  "x": 1840,
+  "y": 790
+ },
+ {
+  "id": "air-mix-valve-pass",
+  "name": "Passenger-Cabin Air Mix Valve",
+  "system": "aircond",
+  "ata": "21",
+  "group": "Temperature control",
+  "function": "Stores a continuous manual mix position for the passenger-cabin air-mix valve.",
+  "flow": "Pack cooling path + hot bypass → passenger-cabin mix valve → cabin distribution.",
+  "relationships": "Separate state and jam fault from the control-cabin valve; position indication follows the modeled valve position.",
+  "specs": [
+   "ATA 21-61 / 21-67",
+   "Position 0–1 trainer scale"
+  ],
+  "controls": "PASS CABIN AIR MIX",
+  "x": 1840,
+  "y": 825
+ },
+ {
+  "id": "fuel-heater",
+  "name": "Fuel Heating Valve / Control Path",
+  "system": "fuel",
+  "ata": "75-12-01 / 73-14-0",
+  "group": "Fuel de-icing",
+  "function": "Models separate engine fuel-heater selection, the WDM-confirmed 28V DC Bus 1 / Bus 2 control feeds, valve-open indication and trainer fuel-temperature response.",
+  "flow": "ENG 1 command + 28V DC Bus 1 / ENG 2 command + 28V DC Bus 2 → separate heater valve/timer paths → modeled fuel temperature response.",
+  "relationships": "Failure can inhibit heating; temperature-rise rate is trainer-defined and must not be treated as an AMM calibration value.",
+  "specs": [
+   "ATA 28",
+   "Trainer thermal response"
+  ],
+  "controls": "FUEL HEAT 1 / 2",
+  "x": 1840,
+  "y": 860
+ },
+ {
+  "id": "fuel-temp-indicator",
+  "name": "Fuel Temperature Indication",
+  "system": "fuel",
+  "ata": "28",
+  "group": "Indication",
+  "function": "Displays fuel temperature in tank No.1 when its 28V AC Bus No.2 indication circuit is powered; loss of power parks the pointer off scale at the low end.",
+  "flow": "Tank No.1 sensing bulb → P5-2 fuel-temperature indicator; power through P6-3 C355 from 28V AC Bus No.2.",
+  "relationships": "The supplied WDM calls this subject 28-42-01 (sheet 21 for effectivity 359); AMM D6-12005 calls the description 28-43-0. Preserve this cross-manual ATA numbering discrepancy in audit records.",
+  "specs": [
+   "WDM 28-42-01",
+   "AMM D6-12005 28-43-0",
+   "28V AC Bus No.2"
+  ],
+  "controls": "FUEL TEMP gauge / P6-3 C355 indication circuit",
+  "x": 1840,
+  "y": 895
+ },
+ {
+  "id": "window-heat-groups",
+  "name": "Windshield / Window Heat Electrical Groups",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Window anti-ice",
+  "function": "Models the left and right window-heat power groups and their heating effect on the visual ice/fog state.",
+  "flow": "AC source → window heat group → windshield/window thermal state.",
+  "relationships": "Overheat cutout and injected channel failure can inhibit heating; detailed channel-to-window effectivity remains a WDM check item.",
+  "specs": [
+   "ATA 30-41-11/12",
+   "Trainer thermal model"
+  ],
+  "controls": "WINDOW HEAT L/R",
+  "x": 1840,
+  "y": 930
+ },
+ {
+  "id": "rain-repellent",
+  "name": "Rain Repellent Spray System",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Rain protection",
+  "function": "Converts a momentary left/right command into a timed spray pulse and visible pane-repellent animation.",
+  "flow": "P5 spray command → timed control pulse → selected windshield pane.",
+  "relationships": "Left and right pulses are independent; failure inhibits both modeled spray paths.",
+  "specs": [
+   "ATA 30-44-01",
+   "Trainer pulse timer"
+  ],
+  "controls": "RAIN REPELLENT L / R",
+  "x": 1840,
+  "y": 965
+ },
+ {
+  "id": "yaw-damper",
+  "name": "Yaw Damper Actuator / Signal Path",
+  "system": "flightcontrols",
+  "ata": "22",
+  "group": "Yaw damping",
+  "function": "Applies training-level yaw-rate damping when selected, DC powered, hydraulic pressure is available and no injected fault is active.",
+  "flow": "Yaw rate + yaw-damper command → damping law → rudder/yaw response.",
+  "relationships": "Power and System B hydraulic interlocks are distinct from the command switch; the damping gain is a simulator approximation.",
+  "specs": [
+   "ATA 22-15-11 / 22-15-31",
+   "Trainer damping coefficient"
+  ],
+  "controls": "YAW DAMPER",
+  "x": 1840,
+  "y": 1000
+ },
+ {
+  "id": "crew-oxygen",
+  "name": "Crew Oxygen Supply / Pressure Indication",
+  "system": "oxygen",
+  "ata": "35",
+  "group": "Crew oxygen",
+  "function": "Models crew oxygen bottle pressure, the crew NORMAL/ON selection and pressure-indication power/failure.",
+  "flow": "Crew oxygen bottle → regulator/mask supply → pressure indication and simulated mask-mic interlock.",
+  "relationships": "Pressure usage/leak rates are trainer values, not a specified AMM flow/pressure schedule.",
+  "specs": [
+   "ATA 35-21-11",
+   "Trainer bottle pressure"
+  ],
+  "controls": "CREW OXYGEN / MASK MIC",
+  "x": 1840,
+  "y": 1035
+ },
+ {
+  "id": "passenger-oxygen",
+  "name": "Passenger Oxygen System Control",
+  "system": "oxygen",
+  "ata": "35",
+  "group": "Passenger oxygen",
+  "function": "Models NORMAL/ON selection and an optional automatic deployment trainer trigger.",
+  "flow": "Passenger oxygen command / simulated cabin-altitude threshold → deployed indication.",
+  "relationships": "Threshold estimation is simplified; distribution and detailed passenger service-unit deployment are not fully represented.",
+  "specs": [
+   "ATA 35-21-21/31/41",
+   "Auto deployment optional"
+  ],
+  "controls": "PASS OXYGEN NORMAL / ON",
+  "x": 1840,
+  "y": 1070
+ },
+ {
+  "id": "irs-l",
+  "name": "Left Inertial Reference Unit (Training Model)",
+  "system": "navigation",
+  "ata": "34",
+  "group": "Inertial reference",
+  "function": "Models OFF/ALIGN/NAV/ATT selection, DC-gated alignment progress and left-side heading validity.",
+  "flow": "DC power → IRS align state → heading/attitude source-validity path.",
+  "relationships": "This is an intentionally simplified IRS training model; it is not a full calibrated inertial navigation solution.",
+  "specs": [
+   "ATA 34",
+   "90 s trainer alignment"
+  ],
+  "controls": "IRS L mode selector",
+  "x": 1840,
+  "y": 1105
+ },
+ {
+  "id": "irs-r",
+  "name": "Right Inertial Reference Unit (Training Model)",
+  "system": "navigation",
+  "ata": "34",
+  "group": "Inertial reference",
+  "function": "Models OFF/ALIGN/NAV/ATT selection, DC-gated alignment progress and right-side heading validity.",
+  "flow": "DC power → IRS align state → heading/attitude source-validity path.",
+  "relationships": "This is an intentionally simplified IRS training model; it is not a full calibrated inertial navigation solution.",
+  "specs": [
+   "ATA 34",
+   "90 s trainer alignment"
+  ],
+  "controls": "IRS R mode selector",
+  "x": 1840,
+  "y": 1140
+ },
+ {
+  "id": "cvr",
+  "name": "Cockpit Voice Recorder Control / Indication",
+  "system": "electrical",
+  "ata": "23",
+  "group": "Recording",
+  "function": "Models recorder power, OFF indication, TEST input, elapsed powered-recording time and ground-only erase state.",
+  "flow": "DC power → CVR control → recorder state and indications.",
+  "relationships": "Recorded audio content is not captured; state is for system-training behavior only.",
+  "specs": [
+   "ATA 23-71-01",
+   "Trainer elapsed-time state"
+  ],
+  "controls": "CVR TEST / ERASE / NORMAL",
+  "x": 1840,
+  "y": 1175
+ },
+ {
+  "id": "door-warning",
+  "name": "Cabin Door Warning Indication",
+  "system": "cabin",
+  "ata": "52",
+  "group": "Door indication",
+  "function": "Drives a common door-warning indication from the shared simulated door-position state and opens a qualitative cabin-pressure leak path when a modeled door is open.",
+  "flow": "Modeled door position → warning logic and pressure leak → DOOR WARN indication / cabin differential decay.",
+  "relationships": "Per-door annunciations and pressure-leak response are training-level approximations; failure suppresses the annunciation but does not close the door or leak path.",
+  "specs": [
+   "ATA 52-71-01",
+   "Trainer door-position switches"
+  ],
+  "controls": "DOOR position controls / DOOR WARN",
+  "x": 1840,
+  "y": 1210
+ },
+ {
+  "id": "elt",
+  "name": "Emergency Locator Transmitter",
+  "system": "navigation",
+  "ata": "25",
+  "group": "Emergency locator",
+  "function": "Models OFF/ARM/ON selection, manual transmission and a simplified overrun/impact cue in ARM.",
+  "flow": "ELT selector / event cue → transmitter state → ELT indication.",
+  "relationships": "No RF signal is transmitted by this trainer; event logic is for visual instruction only.",
+  "specs": [
+   "ATA 25",
+   "No RF transmission"
+  ],
+  "controls": "ELT OFF / ARM / ON",
+  "x": 1840,
+  "y": 1245
+ },
+ {
+  "id": "service-interphone",
+  "name": "Service Interphone / Cabin Call",
+  "system": "cabin",
+  "ata": "23",
+  "group": "Interphone",
+  "function": "Models service-interphone selection, attendant/ground calls and the shared call indication.",
+  "flow": "Call button → shared SimState call flag → powered cabin CALL indication.",
+  "relationships": "Audio routing is not full aircraft interphone wiring; all visible trainer panels share a single state.",
+  "specs": [
+   "ATA 23-41-01 / 23-42-01",
+   "Trainer call events"
+  ],
+  "controls": "SERVICE INTERPHONE / ATTEND / GRD CALL",
+  "x": 1840,
+  "y": 1280
+ },
+ {
+  "id": "exterior-lighting",
+  "name": "Exterior Lighting Control and Loads",
+  "system": "lights",
+  "ata": "33",
+  "group": "Lighting",
+  "function": "Represents exterior lighting command and power distribution for panel/library tracing.",
+  "flow": "Power bus → lighting control → position/landing/taxi/anti-collision loads.",
+  "relationships": "Actual per-light state remains driven by deriveLights; this catalog entry is a grouping, not an extra logic engine.",
+  "specs": [
+   "ATA 33",
+   "AC/DC source dependent"
+  ],
+  "controls": "Exterior lighting switches",
+  "x": 1840,
+  "y": 1315
+ },
+ {
+  "id": "instrument-lighting",
+  "name": "Interior / Instrument Lighting Loads",
+  "system": "lights",
+  "ata": "33",
+  "group": "Interior lighting",
+  "function": "Represents panel, flood, cabin and sign lighting circuits in the component library.",
+  "flow": "Lighting bus → dimmer/selector → interior illumination loads.",
+  "relationships": "Lighting load details are aggregated in the trainer; individual circuits are not a complete P6 schematic.",
+  "specs": [
+   "ATA 33",
+   "Trainer aggregated circuits"
+  ],
+  "controls": "PANEL / FLOOD / cabin and sign controls",
+  "x": 1840,
+  "y": 1350
+ },
+ {
+  "id": "nav-receiver-system",
+  "name": "VHF NAV Receiver / Source Transfer Path",
+  "system": "navigation",
+  "ata": "34",
+  "group": "Radio navigation",
+  "function": "Links simulated NAV 1/2 receiver state to the MIP receiver selection and guidance validity path.",
+  "flow": "NAV receiver + selected source → station/ILS geometry → CDI/ADI guidance flags.",
+  "relationships": "No RF receiver is present; NAV station behavior is software-generated and selection effects are modeled.",
+  "specs": [
+   "ATA 34",
+   "Software-only receiver"
+  ],
+  "controls": "NAV 1/2 and VHF NAV transfer",
+  "x": 1840,
+  "y": 1385
+ },
+ {
+  "id": "stab-trim-cutout",
+  "name": "Stabilizer Trim Cutout / Override",
+  "system": "flightcontrols",
+  "ata": "27",
+  "group": "Trim control",
+  "function": "Keeps stabilizer trim position, cutout A/B and override in one shared simulation state.",
+  "flow": "Trim input → cutout/override logic → trim position → pitch-bias training response.",
+  "relationships": "The trim-to-pitch coefficient is a trainer value; local pedestal trim state no longer overrides the global position.",
+  "specs": [
+   "ATA 27",
+   "0–15 trainer units"
+  ],
+  "controls": "STAB TRIM / CUTOUT A / CUTOUT B",
+  "x": 1840,
+  "y": 1420
+ },
+ {
+  "id": "drain-heater-fwd",
+  "name": "Forward Toilet Drain Heater",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Drain heating",
+  "function": "Models the forward toilet drain heater on the common 115V AC DRAIN HEATER branch.",
+  "flow": "115V AC bus No.2 → P18 DRAIN HEATER breaker → forward toilet drain heater.",
+  "relationships": "WDM 30-71-01, printed sheet 21, effectivity 359 shows the toilet drain heater path; temperature rise is trainer-only.",
+  "specs": [
+   "ATA 30-71-01",
+   "WDM sheet 21 / effectivity 359"
+  ],
+  "controls": "P18 DRAIN HEATER CB",
+  "x": 1840,
+  "y": 1455
+ },
+ {
+  "id": "drain-heater-aft",
+  "name": "Aft Toilet Drain Heater",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Drain heating",
+  "function": "Models the aft toilet drain heater on the common 115V AC DRAIN HEATER branch.",
+  "flow": "115V AC bus No.2 → P18 DRAIN HEATER breaker → aft toilet drain heater.",
+  "relationships": "WDM 30-71-01, printed sheet 21, effectivity 359 shows the toilet drain heater path; temperature rise is trainer-only.",
+  "specs": [
+   "ATA 30-71-01",
+   "WDM sheet 21 / effectivity 359"
+  ],
+  "controls": "P18 DRAIN HEATER CB",
+  "x": 1840,
+  "y": 1490
+ },
+ {
+  "id": "drain-mast-heaters",
+  "name": "Drain Mast / Drain Line Heaters",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Drain heating",
+  "function": "Models the AIR/GROUND heating feeds for the forward and aft drain-mast elements using the supplied effectivity-359 WDM wire-level bus assignments.",
+  "flow": "WDM CH30 30-71-01 sheet 21: AIR high heat uses 115V AC BUS No.1 through C700 DRAIN MAST HEATER-AIR; GROUND low heat uses 28V AC BUS No.2 through C224 DRAIN MAST HEATER-GND. Air/ground sensing and external-power inhibition remain modeled. Simulator source selection is resolved to the supplied effectivity-359 WDM (Bus No.1 for AIR mode); AMM ATA 30-71-0 instead names 115V AC Main Bus No.2, so the source-document conflict remains documented and must not be represented as aircraft-configuration-verified.",
+  "relationships": "WDM 30-71-01 sheet 21, effectivity 359, identifies forward drain mast, forward drain-mast line and aft drain-mast loads. The 28V AC Bus No.2 is represented by a transfer-bus availability proxy; actual temperature/time response remains trainer-only.",
+  "specs": [
+   "ATA 30-71-01 / effectivity 359",
+   "115V AC Bus No.1 air mode per WDM",
+   "28V AC Bus No.2 ground mode per WDM"
+  ],
+  "controls": "P18 DRAIN MAST HEATER AIR/GROUND CBs",
+  "x": 1840,
+  "y": 1525
+ },
+ {
+  "id": "alpha-vane-left",
+  "name": "Left Alpha-Vane Heater / Ice State",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Probe heating",
+  "function": "Models the left alpha-vane heater power path and qualitative ice accretion/removal state under shared icing conditions.",
+  "flow": "Icing condition + heater command + AC/CB state → alpha-vane ice-state response.",
+  "relationships": "Ice accretion/removal rates are trainer values; the model is not a calibrated AOA sensor or stall-warning computer.",
+  "specs": [
+   "ATA 30-31",
+   "0–100% qualitative ice state"
+  ],
+  "controls": "LEFT ALPHA VANE HEAT / P6 CB",
+  "x": 1840,
+  "y": 1525
+ },
+ {
+  "id": "alpha-vane-right",
+  "name": "Right Alpha-Vane Heater / Ice State",
+  "system": "antiice",
+  "ata": "30",
+  "group": "Probe heating",
+  "function": "Models the right alpha-vane heater power path and qualitative ice accretion/removal state under shared icing conditions.",
+  "flow": "Icing condition + heater command + AC/CB state → alpha-vane ice-state response.",
+  "relationships": "Ice accretion/removal rates are trainer values; the model is not a calibrated AOA sensor or stall-warning computer.",
+  "specs": [
+   "ATA 30-31",
+   "0–100% qualitative ice state"
+  ],
+  "controls": "RIGHT ALPHA VANE HEAT / P6 CB",
+  "x": 1840,
+  "y": 1560
+ },
+ {
+  "id": "p6-circuit-breaker-trainer",
+  "name": "Interactive P6 Circuit-Breaker Trainer Subset",
+  "system": "electrical",
+  "ata": "24",
+  "group": "Circuit protection",
+  "function": "Provides interactive open/reset behavior for explicitly modeled breaker paths and links those paths to shared simulator state.",
+  "flow": "User CB pull/reset → shared breaker state → gated system controls, loads and indications.",
+  "relationships": "Not a complete serial/effectivity-specific P6 reproduction; exact breaker names, bus assignments and wire/pin mappings require the applicable WDM diagram sheets.",
+  "specs": [
+   "ATA 24 and connected-system subjects",
+   "Interactive modeled subset"
+  ],
+  "controls": "P6 CIRCUIT BREAKER TRAINER",
+  "x": 1840,
+  "y": 1595
+ }
+]

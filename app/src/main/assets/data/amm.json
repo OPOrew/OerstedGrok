@@ -1,0 +1,269 @@
+{
+ "meta": {
+  "book": "AMM D6-37106",
+  "revision": "53",
+  "date": "01 Aug 2009",
+  "model": "737-100/200",
+  "customer": "US Airways",
+  "source": "AMM/IPC · 737-12 USA AMM"
+ },
+ "chapters": [
+  {
+   "ata": "05",
+   "title": "Time Limits / Maintenance Checks",
+   "file": "05___053.PDF"
+  },
+  {
+   "ata": "06",
+   "title": "Dimensions and Areas",
+   "file": "06___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "07",
+   "title": "Lifting and Shoring",
+   "file": "07___053.PDF"
+  },
+  {
+   "ata": "08",
+   "title": "Leveling and Weighing",
+   "file": "08___053.PDF"
+  },
+  {
+   "ata": "09",
+   "title": "Towing and Taxiing",
+   "file": "09___053.PDF"
+  },
+  {
+   "ata": "10",
+   "title": "Parking, Mooring, Storage",
+   "file": "10___053.PDF"
+  },
+  {
+   "ata": "12",
+   "title": "Servicing",
+   "file": "12___053.PDF"
+  },
+  {
+   "ata": "20",
+   "title": "Standard Practices — Airframe",
+   "file": "20___053.PDF"
+  },
+  {
+   "ata": "21",
+   "title": "Air Conditioning",
+   "file": "21___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "22",
+   "title": "Auto Flight",
+   "file": "22___053.PDF"
+  },
+  {
+   "ata": "23",
+   "title": "Communications",
+   "file": "23___053.PDF"
+  },
+  {
+   "ata": "24",
+   "title": "Electrical Power",
+   "file": "24___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "25",
+   "title": "Equipment / Furnishings",
+   "file": "25___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "26",
+   "title": "Fire Protection",
+   "file": "26___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "27",
+   "title": "Flight Controls",
+   "file": "27___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "28",
+   "title": "Fuel",
+   "file": "28___053.PDF"
+  },
+  {
+   "ata": "29",
+   "title": "Hydraulic Power",
+   "file": "29___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "30",
+   "title": "Ice and Rain Protection",
+   "file": "30___053.PDF"
+  },
+  {
+   "ata": "31",
+   "title": "Indicating / Recording Systems",
+   "file": "31___053.PDF"
+  },
+  {
+   "ata": "32",
+   "title": "Landing Gear",
+   "file": "32___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "33",
+   "title": "Lights",
+   "file": "33___053.PDF"
+  },
+  {
+   "ata": "34",
+   "title": "Navigation",
+   "file": "34___053.PDF"
+  },
+  {
+   "ata": "35",
+   "title": "Oxygen",
+   "file": "35___053.PDF"
+  },
+  {
+   "ata": "36",
+   "title": "Pneumatic",
+   "file": "36___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "38",
+   "title": "Water / Waste",
+   "file": "38___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "49",
+   "title": "Airborne Auxiliary Power",
+   "file": "49___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "51",
+   "title": "Structures — General",
+   "file": "51___053.PDF"
+  },
+  {
+   "ata": "52",
+   "title": "Doors",
+   "file": "52___053.PDF"
+  },
+  {
+   "ata": "53",
+   "title": "Fuselage",
+   "file": "53___053.PDF"
+  },
+  {
+   "ata": "54",
+   "title": "Nacelles / Pylons",
+   "file": "54___053.PDF"
+  },
+  {
+   "ata": "55",
+   "title": "Stabilizers",
+   "file": "55___053.PDF"
+  },
+  {
+   "ata": "56",
+   "title": "Windows",
+   "file": "56___053.PDF"
+  },
+  {
+   "ata": "57",
+   "title": "Wings",
+   "file": "57___053.PDF"
+  },
+  {
+   "ata": "71",
+   "title": "Power Plant",
+   "file": "71___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "73",
+   "title": "Engine Fuel and Control",
+   "file": "73___053.PDF"
+  },
+  {
+   "ata": "74",
+   "title": "Ignition",
+   "file": "74___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "75",
+   "title": "Air",
+   "file": "75___053.PDF"
+  },
+  {
+   "ata": "76",
+   "title": "Engine Controls",
+   "file": "76___053.PDF"
+  },
+  {
+   "ata": "77",
+   "title": "Engine Indicating",
+   "file": "77___053.PDF"
+  },
+  {
+   "ata": "78",
+   "title": "Exhaust",
+   "file": "78___053.PDF",
+   "trainer": true
+  },
+  {
+   "ata": "79",
+   "title": "Oil",
+   "file": "79___053.PDF"
+  },
+  {
+   "ata": "80",
+   "title": "Starting",
+   "file": "80___053.PDF",
+   "trainer": true
+  }
+ ],
+ "dims": [
+  {
+   "label": "Length",
+   "value": "100 ft 2 in",
+   "note": "30.53 m · 737-200"
+  },
+  {
+   "label": "Wingspan",
+   "value": "93 ft 0 in",
+   "note": "28.35 m · no winglets"
+  },
+  {
+   "label": "Height",
+   "value": "36 ft 10 in",
+   "note": "11.23 m to fin tip"
+  },
+  {
+   "label": "Engines",
+   "value": "2 × JT8D",
+   "note": "Underwing, long nacelle"
+  },
+  {
+   "label": "APU",
+   "value": "GTCP85",
+   "note": "Tail cone compartment"
+  },
+  {
+   "label": "Manifold",
+   "value": "40–46 psi",
+   "note": "Bleed / packs / start"
+  }
+ ]
+}

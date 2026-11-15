@@ -1,0 +1,152 @@
+[
+ {
+  "id": "apu",
+  "ata": "49",
+  "title": "Auxiliary Power",
+  "short": "APU",
+  "blurb": "Tail-mounted GTCP unit supplying 28V control, AC generation, and ~40–46 psi bleed air on the ground.",
+  "power": "28V DC & bleed air",
+  "panel": "P5 / P6",
+  "accent": "fuel"
+ },
+ {
+  "id": "powerplant",
+  "ata": "71–80",
+  "title": "Power Plant",
+  "short": "JT8D",
+  "blurb": "Twin JT8D engines: pneumatic start, bleed, CSD generators, and System A hydraulic pumps.",
+  "power": "Pneumatic start / 115V 400 Hz",
+  "panel": "P5 / P6-2 / P6-4",
+  "accent": "pneumatic"
+ },
+ {
+  "id": "hydraulics",
+  "ata": "29",
+  "title": "Hydraulic Power",
+  "short": "Hyd",
+  "blurb": "System A (engine pumps), System B (electric pumps), and standby — 3000 psi to gear, brakes, and flight controls.",
+  "power": "3000 psi A/B · ~2900 psi stby",
+  "panel": "P5 overhead / P6",
+  "accent": "hyd-a"
+ },
+ {
+  "id": "pneumatic",
+  "ata": "36",
+  "title": "Pneumatic / Bleed Air",
+  "short": "Pneumatic",
+  "blurb": "Engine 8th/13th-stage bleed, precooling, APU and ground-air sources, isolation, manifolds, and generalized pneumatic users.",
+  "power": "8th/13th stage · APU · ground air",
+  "panel": "P5-10 / P5-17 / P6",
+  "accent": "pneumatic"
+ },
+ {
+  "id": "aircond",
+  "ata": "21 / 36",
+  "title": "Air Conditioning",
+  "short": "Packs",
+  "blurb": "Bleed manifold, isolation valve, dual packs, ACM cooling, and mix valves feeding cabin inflow.",
+  "power": "Manifold ~40–46 psi",
+  "panel": "P5-10 / P5-17 / P6",
+  "accent": "elec"
+ },
+ {
+  "id": "fuel",
+  "ata": "28",
+  "title": "Fuel",
+  "short": "Fuel",
+  "blurb": "Fuel tanks, boost pumps, shutoff/crossfeed valves, quantity and engine/APU feed paths.",
+  "power": "115V AC pump power / 28V DC valve control",
+  "panel": "P2 / P5 / P15 / P6",
+  "accent": "fuel"
+ },
+ {
+  "id": "fire",
+  "ata": "26",
+  "title": "Fire Protection",
+  "short": "Fire",
+  "blurb": "Engine, APU, wheel-well and effectivity-dependent cargo detection, warning and extinguishing control.",
+  "power": "28V DC control / detection",
+  "panel": "P8 / P5 / APU remote",
+  "accent": "accent"
+ },
+ {
+  "id": "antiice",
+  "ata": "30",
+  "title": "Ice & Rain Protection",
+  "short": "Ice / Rain",
+  "blurb": "Engine/wing thermal anti-ice, window and probe heating, shared alpha-vane icing cues, rain-repellent pulses, and distinct effectivity-359 toilet-drain / air-ground drain-mast heater feeds.",
+  "power": "Engine bleed / pneumatic · electrical control",
+  "panel": "P5 / P6",
+  "accent": "pneumatic"
+ },
+ {
+  "id": "cabin",
+  "ata": "21 / 25 / 38",
+  "title": "Cabin Systems",
+  "short": "Cabin",
+  "blurb": "Pressurization outflow, potable water, toilets, PSU and door state; modeled open doors now act as a cabin-pressure leak in the trainer.",
+  "power": "28V DC · 115V AC · bleed",
+  "panel": "P5-6 / P18",
+  "accent": "accent"
+ },
+ {
+  "id": "flightcontrols",
+  "ata": "27",
+  "title": "Flight Controls",
+  "short": "Flt Ctrl",
+  "blurb": "Ailerons, spoilers, elevator, rudder, and high-lift devices gated by the hydraulic modular packages.",
+  "power": "Hyd A & B 3000 psi",
+  "panel": "P5-3 / P6",
+  "accent": "hyd-b"
+ },
+ {
+  "id": "landinggear",
+  "ata": "32",
+  "title": "Landing Gear",
+  "short": "Gear",
+  "blurb": "System A extension/retraction and steering; System B brakes, autobrake, and anti-skid.",
+  "power": "Hyd A & B 3000 psi",
+  "panel": "Center panel / P6",
+  "accent": "ok"
+ },
+ {
+  "id": "electrical",
+  "ata": "24",
+  "title": "Electrical Power",
+  "short": "Electrical",
+  "blurb": "Engine/APU/external AC sources, generator-drive disconnect, transfer buses, DC conversion, standby power and modeled electrical loads.",
+  "power": "115/200V AC · 28V DC",
+  "panel": "P5-5 / P6",
+  "accent": "elec"
+ },
+ {
+  "id": "navigation",
+  "ata": "22 / 23 / 34",
+  "title": "Navigation & Instrument Sources",
+  "short": "Navigation",
+  "blurb": "Simulated NAV receivers, instrument-source transfer and training-level IRS L/R alignment / source-validity paths.",
+  "power": "AC/DC · receiver CBs",
+  "panel": "P5 / MIP / P8",
+  "accent": "elec"
+ },
+ {
+  "id": "lights",
+  "ata": "33",
+  "title": "Lighting",
+  "short": "Lights",
+  "blurb": "Exterior, interior, signs and emergency-exit lighting with power-source and automatic behavior represented in the trainer.",
+  "power": "AC/DC by circuit",
+  "panel": "P5 / cabin panels",
+  "accent": "ok"
+ },
+ {
+  "id": "oxygen",
+  "ata": "35",
+  "title": "Oxygen",
+  "short": "Oxygen",
+  "blurb": "Shared crew-bottle pressure, crew oxygen selection, mask-microphone interlock, and passenger oxygen deployment logic.",
+  "power": "Mechanical supply · DC indication",
+  "panel": "P5 / passenger service units",
+  "accent": "accent"
+ }
+]
