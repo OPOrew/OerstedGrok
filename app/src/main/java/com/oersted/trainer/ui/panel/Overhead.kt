@@ -55,7 +55,12 @@ fun Overhead(
         if (show("apu")) ApuModule(s, d, edit)
         if (show("bleed")) BleedModule(s, d, edit)
         if (show("start")) StartModule(s, d, edit)
-        if (all) FuelModule(s, d, edit)
+        if (all) RealisticFuelPanel(
+            s = s,
+            d = d,
+            edit = edit,
+            editNote = { note, block -> cockpit.patchSimNote(note, block) },
+        )
         if (all) EnvironmentModule(s, edit)
         if (all) AntiIceModule(s, d, edit)
         if (show("lights")) ExteriorLightsModule(s, d, edit)
