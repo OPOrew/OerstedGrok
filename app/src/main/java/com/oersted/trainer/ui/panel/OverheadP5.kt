@@ -2,7 +2,6 @@ package com.oersted.trainer.ui.panel
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,14 +9,11 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,37 +22,32 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.oersted.trainer.sim.Derived
 import com.oersted.trainer.sim.SimState
 import com.oersted.trainer.ui.cockpit.CockpitModel
-import com.oersted.trainer.ui.common.Classic737Palette
+import com.oersted.trainer.ui.pedestal.Annun
+import com.oersted.trainer.ui.pedestal.AnnunTone
+import com.oersted.trainer.ui.pedestal.PedestalLegend
+import com.oersted.trainer.ui.pedestal.Plate
+import com.oersted.trainer.ui.pedestal.PushButton
+import com.oersted.trainer.ui.pedestal.Selector3
+import com.oersted.trainer.ui.pedestal.Toggle
 
 /**
- * P5 forward overhead — layout matched to web OverheadP5.tsx / reference photo:
- * 5 columns (216/224/98/217/217), INDEX·TO·LOCK band, main systems row, bottom light/start strip.
- * DESIGN_W = 1008 like the web. Systems wired to sim; expand remaining local-only plates iteratively.
+ * P5 forward overhead — visual design matched to web OverheadP5 / reference screenshots.
+ * Uses the same Plate / Toggle / Annun / Selector3 as the center pedestal (web PedestalParts).
+ * Column widths mirror web: 216 · 224 · 98 · 217 · 217 (DESIGN_W = 1008).
  */
 private const val DESIGN_W = 1008f
-
-private val PanelShell = Color(0xFF55585C)
-private val Plate = Color(0xFF6B6F73)
-private val PlateLight = Color(0xFF9B9EA2)
-private val Face = Color(0xFF2C2F33)
-private val Border = Color(0xFF202225)
-private val Legend = Color(0xFFE6E1D2)
-private val LegendDark = Color(0xFF1A1C1F)
-private val Dim = Color(0xFF8A8578)
-private val Screw = Color(0xFF3A3E42)
+private val ColW = listOf(216f, 224f, 98f, 217f, 217f)
 
 @Composable
 fun OverheadP5(cockpit: CockpitModel, modifier: Modifier = Modifier) {
@@ -66,24 +57,21 @@ fun OverheadP5(cockpit: CockpitModel, modifier: Modifier = Modifier) {
     val pw = d.dcPower || d.batteryPower
 
     Column(modifier.fillMaxWidth()) {
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Column {
-                Text(
-                    "P5 · FORWARD OVERHEAD · 737-200",
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 10.sp,
-                    color = Color(0xFFB9AF98),
-                    letterSpacing = 1.6.sp,
-                )
-                Text(
-                    "Interactive overhead — every control is live",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
-                    color = Color(0xFFE8E4DC),
-                )
-            }
-        }
+        Text(
+            "P5 · FORWARD OVERHEAD · 737-200",
+            fontFamily = FontFamily.Monospace,
+            fontSize = 10.sp,
+            color = Color(0xFFB9AF98),
+            letterSpacing = 1.6.sp,
+        )
+        Text(
+            "Interactive overhead — every control is live",
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 16.sp,
+            color = Color(0xFFE8E4DC),
+        )
         Spacer(Modifier.height(8.dp))
+
         BoxWithConstraints(
             Modifier
                 .fillMaxWidth()
@@ -93,7 +81,7 @@ fun OverheadP5(cockpit: CockpitModel, modifier: Modifier = Modifier) {
                 .padding(8.dp)
                 .horizontalScroll(rememberScrollState()),
         ) {
-            val scale = (maxWidth.value / DESIGN_W).coerceIn(0.32f, 1f)
+            val scale = (maxWidth.value / DESIGN_W).coerceIn(0.30f, 1f)
             Box(
                 Modifier
                     .width((DESIGN_W * scale).dp)
@@ -106,277 +94,273 @@ fun OverheadP5(cockpit: CockpitModel, modifier: Modifier = Modifier) {
                 Column(
                     Modifier
                         .width(DESIGN_W.dp)
-                        .shadow(12.dp, RoundedCornerShape(10.dp))
                         .clip(RoundedCornerShape(10.dp))
-                        .border(2.dp, Border, RoundedCornerShape(10.dp))
+                        .border(2.dp, Color(0xFF202225), RoundedCornerShape(10.dp))
                         .background(
                             Brush.verticalGradient(
-                                listOf(Color(0xFF5E6266), PanelShell, Color(0xFF4A4E52)),
+                                listOf(Color(0xFF5E6266), Color(0xFF55585C), Color(0xFF4A4E52)),
                             ),
                         )
                         .padding(8.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp),
                 ) {
-                    // ── Top row: 5 cols ──
-                    FiveCols {
-                        ColPlate {
-                            Cap("ELT"); MiniToggle("ARM", false) {}
-                            Cap("LE DEVICES"); MiniToggle("TEST", false) {}
-                        }
-                        ColPlate {
-                            Cap("CARGO FIRE")
-                            Row {
-                                Ann("FWD", false); Ann("AFT", false)
+                    // ── Top row ──
+                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Col(0) {
+                            Plate("ELT") {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                                    Annun("ELT", pw && d.eltTransmitting, AnnunTone.AMBER, small = true)
+                                    Selector3(listOf("OFF", "ARM", "ON"), s.eltMode.ifEmpty { "OFF" }, { edit { eltMode = it } }, label = "ELT")
+                                }
                             }
-                            MiniToggle("ARM", false) {}
-                        }
-                        ColPlate {
-                            Cap("SERVICE")
-                            Cap("INTERPHONE")
-                            MiniToggle("ON", false) {}
-                        }
-                        ColPlate {
-                            Cap("AUDIO")
-                            Row { Ann("VHF", false); Ann("HF", false) }
-                            Cap("ENGINE")
-                            Row {
-                                Ann("REV 1", pw && d.thrustReverser1Active)
-                                Ann("REV 2", pw && d.thrustReverser2Active)
+                            Plate("LE DEVICES") {
+                                PedestalLegend("FLAPS · SLATS", size = 6)
+                                PushButton("TEST")
                             }
-                            Cap("OXYGEN")
-                            MiniToggle("PASS ON", false) {}
                         }
-                        ColPlate {
-                            Cap("FLIGHT RECORDER")
-                            MiniToggle("NORMAL", true) {}
-                            Cap("STALL WARNING")
-                            Row { Ann("1", false); Ann("2", false) }
+                        Col(1) {
+                            Plate("CARGO FIRE") {
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Annun("FWD FIRE", false, AnnunTone.RED, small = true)
+                                    Annun("AFT FIRE", false, AnnunTone.RED, small = true)
+                                }
+                                Selector3(listOf("OFF", "ARM", "AFT"), "OFF", {})
+                            }
+                        }
+                        Col(2) {
+                            Plate("SERVICE INTERPHONE") {
+                                Toggle(false, {}, label = "ON", upLabel = "OFF", downLabel = "ON")
+                                Annun("CALL", false, AnnunTone.BLUE, small = true)
+                            }
+                        }
+                        Col(3) {
+                            Plate("ENGINE") {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Annun("REV 1", pw && d.thrustReverser1Active, AnnunTone.AMBER, small = true)
+                                    Annun("REV 2", pw && d.thrustReverser2Active, AnnunTone.AMBER, small = true)
+                                }
+                            }
+                            Plate("CREW OXYGEN") {
+                                PedestalLegend("PSI", size = 6)
+                            }
+                        }
+                        Col(4) {
+                            Plate("FLIGHT RECORDER") {
+                                Selector3(listOf("TEST", "NORMAL"), "NORMAL", {})
+                            }
+                            Plate("STALL WARNING TEST") {
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    PushButton("NO. 1")
+                                    PushButton("NO. 2")
+                                }
+                            }
                         }
                     }
 
-                    // ── INDEX · TO LOCK + DOME WHITE ──
+                    // ── INDEX · TO LOCK band ──
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .height(28.dp)
-                            .clip(RoundedCornerShape(2.dp))
-                            .background(Color(0xFF3A3E42)),
+                            .height(36.dp)
+                            .background(Color(0xFF2A2C30), RoundedCornerShape(2.dp))
+                            .padding(horizontal = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        Text("  INDEX · TO LOCK", fontSize = 8.sp, color = Legend, fontFamily = FontFamily.Monospace)
-                        Text("DOME WHITE", fontSize = 8.sp, color = Legend, fontFamily = FontFamily.Monospace)
-                        Text("INDEX · TO LOCK  ", fontSize = 8.sp, color = Legend, fontFamily = FontFamily.Monospace)
+                        PedestalLegend("INDEX · TO LOCK", size = 6)
+                        PedestalLegend("DOME WHITE", size = 7)
+                        PedestalLegend("INDEX · TO LOCK", size = 6)
                     }
 
-                    // ── Main systems row: 5 cols ──
-                    FiveCols {
-                        // Col A: FLT CONTROL + FUEL
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            ColPlate {
-                                Cap("FLT CONTROL")
+                    // ── Main systems ──
+                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        // Col A — FLT CONTROL + FUEL
+                        Col(0) {
+                            Plate("FLT CONTROL") {
                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("A", s.fltCtrlA, { edit { fltCtrlA = it } }, pw && d.flightControlAAvailable)
-                                    Bat("B", s.fltCtrlB, { edit { fltCtrlB = it } }, pw && d.flightControlBAvailable)
-                                }
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("SPL A", s.spoilerA) { edit { spoilerA = it } }
-                                    Bat("SPL B", s.spoilerB) { edit { spoilerB = it } }
-                                }
-                                Ann("FEEL DIFF", pw && d.feelDiff)
-                                Bat("YAW DMP", s.yawDamper, { edit { yawDamper = it } }, d.yawDamperEffective)
-                            }
-                            ColPlate(light = true) {
-                                Cap("FUEL", dark = true)
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("1 FWD", s.fuelPump1Fwd, { edit { fuelPump1Fwd = it } }, d.fuelPump1FwdOn)
-                                    Bat("1 AFT", s.fuelPump1Aft, { edit { fuelPump1Aft = it } }, d.fuelPump1AftOn)
-                                }
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("CTR L", s.fuelPumpCenter1, { edit { fuelPumpCenter1 = it } }, d.fuelCenterPump1On)
-                                    Bat("CTR R", s.fuelPumpCenter2, { edit { fuelPumpCenter2 = it } }, d.fuelCenterPump2On)
-                                }
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("2 FWD", s.fuelPump2Fwd, { edit { fuelPump2Fwd = it } }, d.fuelPump2FwdOn)
-                                    Bat("2 AFT", s.fuelPump2Aft, { edit { fuelPump2Aft = it } }, d.fuelPump2AftOn)
+                                    Toggle(s.fltCtrlA, { edit { fltCtrlA = it } }, label = "A", upLabel = "ON", downLabel = "OFF", guarded = true)
+                                    Toggle(s.fltCtrlB, { edit { fltCtrlB = it } }, label = "B", upLabel = "ON", downLabel = "OFF", guarded = true)
                                 }
                                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                    Bat("XFEED", s.fuelCrossfeed) { edit { fuelCrossfeed = it } }
-                                    Ann("LOW", pw && d.fuelPump1FwdLowPressure)
-                                    Ann("LOW", pw && d.fuelPump2FwdLowPressure)
+                                    Annun("LOW PRESS", pw && !d.flightControlAAvailable, AnnunTone.AMBER, small = true)
+                                    Annun("LOW PRESS", pw && !d.flightControlBAvailable, AnnunTone.AMBER, small = true)
+                                }
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.spoilerA, { edit { spoilerA = it } }, label = "SPL A", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.spoilerB, { edit { spoilerB = it } }, label = "SPL B", upLabel = "ON", downLabel = "OFF")
+                                }
+                                Annun("FEEL DIFF PRESS", pw && d.feelDiff, AnnunTone.AMBER, small = true)
+                                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Annun("YAW DAMPER", pw && s.yawDamper && !d.yawDamperEffective, AnnunTone.AMBER, small = true)
+                                    Toggle(s.yawDamper, { edit { yawDamper = it } }, upLabel = "ON", downLabel = "OFF")
                                 }
                             }
-                        }
-                        // Col B: STANDBY POWER + GENERATORS
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            ColPlate {
-                                Cap("STANDBY POWER")
-                                Tri(
-                                    listOf("OFF", "AUTO", "BAT"),
-                                    s.standbyPower.ifEmpty { "OFF" },
-                                ) { edit { standbyPower = it } }
-                                Cap("BATTERY")
-                                Bat("BAT", s.battery, { edit { battery = it } }, d.dcPower)
-                                Bat("GRD PWR", s.groundPowerOn, {
-                                    edit { groundPowerOn = if (d.groundPowerAvailable) it else false }
-                                }, d.groundPowerAvailable && s.groundPowerOn)
-                                Ann("GRD AVAIL", pw && d.groundPowerAvailable, Color(0xFF60A5FA))
-                            }
-                            ColPlate {
-                                Cap("GENERATORS")
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("GEN 1", s.gen1, { edit { gen1 = it } }, d.eng1Running && s.gen1)
-                                    Bat("APU", s.apuGen, { edit { apuGen = it } }, d.apuAvailable && s.apuGen)
-                                    Bat("GEN 2", s.gen2, { edit { gen2 = it } }, d.eng2Running && s.gen2)
-                                }
-                                Bat("BUS TIE", s.busTie, { edit { busTie = it } }, d.acPower)
-                                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-                                    Ann("G1 OFF", pw && d.gen1OffBus)
-                                    Ann("G2 OFF", pw && d.gen2OffBus)
-                                    Ann("APU OFF", pw && d.apuGenOffBus)
-                                }
-                                Text(
-                                    "AC ${d.electricalSource1.ifEmpty { "NONE" }}",
-                                    fontSize = 8.sp,
-                                    fontFamily = FontFamily.Monospace,
-                                    color = if (d.acPower) Classic737Palette.Ok else Dim,
-                                )
-                            }
-                        }
-                        // Col C: CABIN / EQUIP
-                        ColPlate {
-                            Cap("EQUIP COOLING")
-                            Tri(listOf("NORM", "ALT"), "NORM") {}
-                            Cap("CABIN SIGNS")
-                            Tri(
-                                listOf("OFF", "AUTO", "ON"),
-                                s.ltSeatBelt.ifEmpty { "OFF" },
-                            ) { edit { ltSeatBelt = it } }
-                            Tri(
-                                listOf("OFF", "AUTO", "ON"),
-                                s.ltNoSmoking.ifEmpty { "OFF" },
-                            ) { edit { ltNoSmoking = it } }
-                            Cap("ATTEND / GRD")
-                            Ann("CALL", pw && s.cabinCallActive)
-                        }
-                        // Col D: ICE + HYD
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            ColPlate {
-                                Cap("ANTI-ICE")
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("ENG1", s.antiIce1) { edit { antiIce1 = it } }
-                                    Bat("ENG2", s.antiIce2) { edit { antiIce2 = it } }
-                                }
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("WING L", s.wingAntiIceL) { edit { wingAntiIceL = it } }
-                                    Bat("WING R", s.wingAntiIceR) { edit { wingAntiIceR = it } }
-                                }
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("HEAT1", s.fuelHeat, { edit { fuelHeat = it } }, d.fuelHeatValveOpen)
-                                    Bat("HEAT2", s.fuelHeat2, { edit { fuelHeat2 = it } }, d.fuelHeatValve2Open)
-                                }
-                            }
-                            ColPlate {
-                                Cap("HYDRAULIC")
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("ENG1", s.engHyd1, { edit { engHyd1 = it } }, d.hydAPump1On)
-                                    Bat("ENG2", s.engHyd2, { edit { engHyd2 = it } }, d.hydAPump2On)
-                                }
-                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("ELEC1", s.elecHyd1, { edit { elecHyd1 = it } }, d.hydBPump1On)
-                                    Bat("ELEC2", s.elecHyd2, { edit { elecHyd2 = it } }, d.hydBPump2On)
+                            Plate("FUEL") {
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Annun("ENG VALVE CLOSED", pw && !d.fuelShutoff1Open, AnnunTone.BLUE, small = true)
+                                    Annun("ENG VALVE CLOSED", pw && !d.fuelShutoff2Open, AnnunTone.BLUE, small = true)
                                 }
                                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                                    Ann("A LOW", pw && d.hydALow)
-                                    Ann("B LOW", pw && d.hydBLow)
+                                    Annun("HEAT 1", d.fuelHeatValveOpen, AnnunTone.BLUE, small = true)
+                                    Annun("HEAT 2", d.fuelHeatValve2Open, AnnunTone.BLUE, small = true)
+                                    Annun("CROSSFEED OPEN", pw && s.fuelCrossfeed, AnnunTone.BLUE, small = true)
+                                }
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.fuelHeat, { edit { fuelHeat = it } }, label = "1 HEAT", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.fuelCrossfeed, { edit { fuelCrossfeed = it } }, label = "XFEED", upLabel = "OPEN", downLabel = "CLOSE")
+                                    Toggle(s.fuelHeat2, { edit { fuelHeat2 = it } }, label = "2 HEAT", upLabel = "ON", downLabel = "OFF")
+                                }
+                                PedestalLegend("FUEL PUMPS", size = 6)
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.fuelPumpCenter1, { edit { fuelPumpCenter1 = it } }, label = "CTR L", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.fuelPumpCenter2, { edit { fuelPumpCenter2 = it } }, label = "CTR R", upLabel = "ON", downLabel = "OFF")
+                                }
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.fuelPump1Aft, { edit { fuelPump1Aft = it } }, label = "1 AFT", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.fuelPump1Fwd, { edit { fuelPump1Fwd = it } }, label = "1 FWD", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.fuelPump2Fwd, { edit { fuelPump2Fwd = it } }, label = "2 FWD", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.fuelPump2Aft, { edit { fuelPump2Aft = it } }, label = "2 AFT", upLabel = "ON", downLabel = "OFF")
+                                }
+                                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+                                    Annun("LOW PRESS", d.fuelPump1AftLowPressure, small = true)
+                                    Annun("LOW PRESS", d.fuelPump1FwdLowPressure, small = true)
+                                    Annun("LOW PRESS", d.fuelPump2FwdLowPressure, small = true)
+                                    Annun("LOW PRESS", d.fuelPump2AftLowPressure, small = true)
                                 }
                             }
                         }
-                        // Col E: AIR COND + BLEED + PRESS
-                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                            ColPlate {
-                                Cap("BLEED / PACKS")
+                        // Col B — meters / gen / bus
+                        Col(1) {
+                            Plate("STANDBY POWER") {
+                                Selector3(listOf("BAT", "OFF", "AUTO"), s.standbyPower.ifEmpty { "OFF" }, { edit { standbyPower = it } })
                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("BLD1", s.bleed1) { edit { bleed1 = it } }
-                                    Bat("BLD2", s.bleed2) { edit { bleed2 = it } }
+                                    Toggle(s.battery, { edit { battery = it } }, label = "BAT", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.groundPowerOn, {
+                                        edit { groundPowerOn = if (d.groundPowerAvailable) it else false }
+                                    }, label = "GRD PWR", upLabel = "ON", downLabel = "OFF")
                                 }
-                                Tri(
-                                    listOf("CLOSE", "AUTO", "OPEN"),
-                                    s.isolation.ifEmpty { "AUTO" },
-                                ) { edit { isolation = it } }
+                                Annun("GRD POWER AVAILABLE", pw && d.groundPowerAvailable, AnnunTone.BLUE, small = true)
+                            }
+                            Plate("BUS TRANS") {
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Annun("TRANSFER BUS OFF", pw && !d.transferBus1Powered, small = true)
+                                    Annun("TRANSFER BUS OFF", pw && !d.transferBus2Powered, small = true)
+                                }
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Annun("GEN OFF BUS", pw && d.gen1OffBus, small = true)
+                                    Annun("APU GEN OFF BUS", pw && d.apuGenOffBus, small = true)
+                                    Annun("GEN OFF BUS", pw && d.gen2OffBus, small = true)
+                                }
                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                                    Bat("PACK L", s.packL) { edit { packL = it } }
-                                    Bat("PACK R", s.packR) { edit { packR = it } }
+                                    Toggle(s.gen1, { edit { gen1 = it } }, label = "GEN 1", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.apuGen, { edit { apuGen = it } }, label = "APU GEN", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.gen2, { edit { gen2 = it } }, label = "GEN 2", upLabel = "ON", downLabel = "OFF")
                                 }
-                                Bat("RECIRC", s.recirc) { edit { recirc = it } }
-                                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
-                                    Ann("TRIP L", pw && s.packTripL)
-                                    Ann("TRIP R", pw && s.packTripR)
-                                    Ann("DUAL", pw && d.dualBleed)
+                                Toggle(s.busTie, { edit { busTie = it } }, label = "BUS TIE", upLabel = "AUTO", downLabel = "OFF")
+                                PedestalLegend("AC ${d.electricalSource1.ifEmpty { "NONE" }}", size = 7)
+                            }
+                            Plate("APU") {
+                                Selector3(listOf("OFF", "ON", "START"), s.apuMaster.ifEmpty { "OFF" }, { edit { apuMaster = it } }, label = "MASTER")
+                                Toggle(s.apuBleed, { edit { apuBleed = it } }, label = "BLEED", upLabel = "ON", downLabel = "OFF")
+                                Annun("APU AVAIL", pw && d.apuAvailable, AnnunTone.GREEN, small = true)
+                            }
+                        }
+                        // Col C — equip / signs
+                        Col(2) {
+                            Plate("EQUIP COOLING") {
+                                Selector3(listOf("NORM", "ALT"), "NORM", {})
+                            }
+                            Plate("EMER EXIT LIGHTS") {
+                                Selector3(listOf("OFF", "ARMED", "ON"), "OFF", {})
+                            }
+                            Plate("PASS SIGNS") {
+                                Selector3(listOf("OFF", "AUTO", "ON"), s.ltNoSmoking.ifEmpty { "OFF" }, { edit { ltNoSmoking = it } }, label = "NO SMOKING")
+                                Selector3(listOf("OFF", "AUTO", "ON"), s.ltSeatBelt.ifEmpty { "OFF" }, { edit { ltSeatBelt = it } }, label = "FASTEN BELTS")
+                            }
+                            Plate {
+                                PushButton("ATTEND", onPress = { edit { cabinCallActive = true } }, onRelease = { edit { cabinCallActive = false } })
+                                Annun("CALL", pw && s.cabinCallActive, AnnunTone.BLUE, small = true)
+                            }
+                        }
+                        // Col D — ice + hyd
+                        Col(3) {
+                            Plate("WINDOW HEAT") {
+                                PedestalLegend("L · R", size = 6)
+                            }
+                            Plate("ANTI-ICE") {
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.wingAntiIceL, { edit { wingAntiIceL = it } }, label = "WING L", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.wingAntiIceR, { edit { wingAntiIceR = it } }, label = "WING R", upLabel = "ON", downLabel = "OFF")
+                                }
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.antiIce1, { edit { antiIce1 = it } }, label = "ENG 1", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.antiIce2, { edit { antiIce2 = it } }, label = "ENG 2", upLabel = "ON", downLabel = "OFF")
                                 }
                             }
-                            ColPlate {
-                                Cap("PRESSURIZATION")
-                                Tri(
-                                    listOf("AUTO", "STBY", "MAN"),
-                                    s.pressMode.ifEmpty { "AUTO" },
-                                ) { edit { pressMode = it } }
-                                Text(
-                                    "ΔP ${"%.1f".format(s.cabinDiff)}  OFV ${"%.0f".format(s.outflow * 100)}%",
-                                    fontSize = 8.sp,
-                                    fontFamily = FontFamily.Monospace,
-                                    color = Dim,
-                                )
+                            Plate("HYD PUMPS") {
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.engHyd1, { edit { engHyd1 = it } }, label = "ENG 1", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.elecHyd2, { edit { elecHyd2 = it } }, label = "ELEC 2", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.elecHyd1, { edit { elecHyd1 = it } }, label = "ELEC 1", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.engHyd2, { edit { engHyd2 = it } }, label = "ENG 2", upLabel = "ON", downLabel = "OFF")
+                                }
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Annun("LOW PRESS", pw && d.hydALow, small = true)
+                                    Annun("LOW PRESS", pw && d.hydBLow, small = true)
+                                }
+                            }
+                        }
+                        // Col E — bleed / press
+                        Col(4) {
+                            Plate("BLEED / PACKS") {
+                                Annun("DUAL BLEED", pw && d.dualBleed, AnnunTone.AMBER, small = true)
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.packL, { edit { packL = it } }, label = "L PACK", upLabel = "ON", downLabel = "OFF")
+                                    Selector3(listOf("CLOSE", "AUTO", "OPEN"), s.isolation.ifEmpty { "AUTO" }, { edit { isolation = it } }, label = "ISOL")
+                                    Toggle(s.packR, { edit { packR = it } }, label = "R PACK", upLabel = "ON", downLabel = "OFF")
+                                }
+                                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                                    Toggle(s.bleed1, { edit { bleed1 = it } }, label = "BLEED 1", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.apuBleed, { edit { apuBleed = it } }, label = "APU", upLabel = "ON", downLabel = "OFF")
+                                    Toggle(s.bleed2, { edit { bleed2 = it } }, label = "BLEED 2", upLabel = "ON", downLabel = "OFF")
+                                }
+                                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                                    Annun("PACK TRIP OFF", pw && s.packTripL, small = true)
+                                    Annun("PACK TRIP OFF", pw && s.packTripR, small = true)
+                                }
+                            }
+                            Plate("PRESSURIZATION") {
+                                Selector3(listOf("AUTO", "STBY", "MAN"), s.pressMode.ifEmpty { "AUTO" }, { edit { pressMode = it } })
+                                PedestalLegend("ΔP ${"%.1f".format(s.cabinDiff)}  OFV ${"%.0f".format(s.outflow * 100)}%", size = 7)
                             }
                         }
                     }
 
-                    // ── Bottom strip: landing lights + engine start ──
-                    ColPlate {
-                        Cap("LANDING / EXTERIOR LIGHTS")
+                    // ── Bottom strip ──
+                    Plate {
+                        PedestalLegend("LANDING / TAXI / EXTERIOR", size = 7)
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                            Tri(listOf("RETR", "EXT", "ON"), s.ltRetL.ifEmpty { "RETR" }) { edit { ltRetL = it } }
-                            Tri(listOf("RETR", "EXT", "ON"), s.ltRetR.ifEmpty { "RETR" }) { edit { ltRetR = it } }
-                            Bat("FIX L", s.ltFixedL) { edit { ltFixedL = it } }
-                            Bat("FIX R", s.ltFixedR) { edit { ltFixedR = it } }
-                            Bat("TAXI", s.ltTaxi) { edit { ltTaxi = it } }
-                            Bat("LOGO", s.ltLogo) { edit { ltLogo = it } }
-                            Bat("A/COL", s.ltAntiCol) { edit { ltAntiCol = it } }
+                            Selector3(listOf("RETR", "EXT", "ON"), normRet(s.ltRetL), { edit { ltRetL = it } }, label = "LDG L")
+                            Selector3(listOf("RETR", "EXT", "ON"), normRet(s.ltRetR), { edit { ltRetR = it } }, label = "LDG R")
+                            Toggle(s.ltFixedL, { edit { ltFixedL = it } }, label = "FIXED L", upLabel = "ON", downLabel = "OFF")
+                            Toggle(s.ltFixedR, { edit { ltFixedR = it } }, label = "FIXED R", upLabel = "ON", downLabel = "OFF")
+                            Toggle(s.ltTaxi, { edit { ltTaxi = it } }, label = "TAXI", upLabel = "ON", downLabel = "OFF")
+                            Toggle(s.ltAntiCol, { edit { ltAntiCol = it } }, label = "ANTI COL", upLabel = "ON", downLabel = "OFF")
+                            Toggle(s.ltLogo, { edit { ltLogo = it } }, label = "LOGO", upLabel = "ON", downLabel = "OFF")
                         }
                     }
-                    ColPlate {
-                        Cap("ENGINE START · APU")
+                    Plate {
+                        PedestalLegend("ENGINE START", size = 7)
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Cap("START 1")
-                                Tri(
-                                    listOf("GRD", "OFF", "CONT", "FLT"),
-                                    s.start1.ifEmpty { "OFF" },
-                                ) { edit { start1 = it } }
-                            }
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Cap("START 2")
-                                Tri(
-                                    listOf("GRD", "OFF", "CONT", "FLT"),
-                                    s.start2.ifEmpty { "OFF" },
-                                ) { edit { start2 = it } }
-                            }
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Cap("APU MASTER")
-                                Tri(
-                                    listOf("OFF", "ON", "START"),
-                                    s.apuMaster.ifEmpty { "OFF" },
-                                ) { edit { apuMaster = it } }
-                            }
-                            Bat("APU BLD", s.apuBleed, { edit { apuBleed = it } }, d.apuAvailable && s.apuBleed)
-                            Ann("APU AVAIL", pw && d.apuAvailable, Classic737Palette.Ok)
+                            Selector3(listOf("GRD", "OFF", "CONT", "FLT"), s.start1.ifEmpty { "OFF" }, { edit { start1 = it } }, label = "1")
+                            Selector3(listOf("GRD", "OFF", "CONT", "FLT"), s.start2.ifEmpty { "OFF" }, { edit { start2 = it } }, label = "2")
                         }
                     }
 
                     Text(
-                        "Lights and displays need DC power — flip BAT first. Tap a switch to move it.",
+                        "Lights need DC — BATTERY ON. Design matched to web P5 plates (PedestalParts).",
                         fontSize = 9.sp,
-                        color = Dim,
+                        color = Color(0xFF8A8578),
                     )
                 }
             }
@@ -384,152 +368,17 @@ fun OverheadP5(cockpit: CockpitModel, modifier: Modifier = Modifier) {
     }
 }
 
-/* ──── layout helpers matching web plate language ──── */
-
 @Composable
-private fun FiveCols(content: @Composable RowScope.() -> Unit) {
-    Row(
-        Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
-        content = content,
-    )
-}
-
-@Composable
-private fun RowScope.Slot(content: @Composable () -> Unit) {
-    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        content()
-    }
-}
-
-@Composable
-private fun ColPlate(light: Boolean = false, content: @Composable () -> Unit) {
+private fun Col(index: Int, content: @Composable () -> Unit) {
     Column(
-        Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(3.dp))
-            .border(1.dp, Color(0xFF2A2E32), RoundedCornerShape(3.dp))
-            .background(if (light) PlateLight else Plate)
-            .padding(5.dp),
-        verticalArrangement = Arrangement.spacedBy(3.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        Modifier.width(ColW[index].dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) { content() }
 }
 
-@Composable
-private fun Cap(text: String, dark: Boolean = false) {
-    Text(
-        text,
-        fontFamily = FontFamily.Monospace,
-        fontSize = 7.sp,
-        fontWeight = FontWeight.Bold,
-        color = if (dark) LegendDark else Legend,
-        letterSpacing = 0.6.sp,
-        textAlign = TextAlign.Center,
-    )
-}
-
-@Composable
-private fun Ann(label: String, on: Boolean, tone: Color = Color(0xFFFBBF24)) {
-    Box(
-        Modifier
-            .clip(RoundedCornerShape(2.dp))
-            .background(if (on) tone else Color(0xFF2A2410))
-            .border(1.dp, Color(0xFF151515), RoundedCornerShape(2.dp))
-            .padding(horizontal = 3.dp, vertical = 2.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            label,
-            fontFamily = FontFamily.Monospace,
-            fontSize = 6.sp,
-            fontWeight = FontWeight.Bold,
-            color = if (on) Color.Black else Color(0xFF5A5030),
-            textAlign = TextAlign.Center,
-            lineHeight = 7.sp,
-        )
-    }
-}
-
-@Composable
-private fun Bat(
-    label: String,
-    on: Boolean,
-    onChange: (Boolean) -> Unit = {},
-    lit: Boolean = on,
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(1.dp),
-    ) {
-        Text(label, fontSize = 6.sp, color = Legend, textAlign = TextAlign.Center, maxLines = 1)
-        Box(
-            Modifier
-                .size(width = 28.dp, height = 36.dp)
-                .clip(RoundedCornerShape(2.dp))
-                .background(Face)
-                .border(1.dp, Color(0xFF15171A), RoundedCornerShape(2.dp))
-                .clickable { onChange(!on) },
-            contentAlignment = Alignment.Center,
-        ) {
-            Box(
-                Modifier
-                    .size(width = 6.dp, height = 18.dp)
-                    .graphicsLayer { rotationZ = if (on) 18f else -18f }
-                    .clip(RoundedCornerShape(1.dp))
-                    .background(
-                        Brush.horizontalGradient(listOf(Color(0xFF9A9EA3), Color(0xFF464A4F), Color(0xFF9A9EA3))),
-                    ),
-            )
-        }
-        Box(
-            Modifier
-                .size(4.dp)
-                .clip(CircleShape)
-                .background(if (lit) Classic737Palette.Ok else Screw),
-        )
-    }
-}
-
-@Composable
-private fun Tri(options: List<String>, value: String, onChange: (String) -> Unit) {
-    Column(
-        Modifier
-            .clip(RoundedCornerShape(2.dp))
-            .border(1.dp, Color(0xFF15171A), RoundedCornerShape(2.dp))
-            .background(Face),
-    ) {
-        options.forEach { opt ->
-            val active = value.equals(opt, ignoreCase = true) ||
-                (opt == "RETR" && value.startsWith("RETR", true))
-            Text(
-                opt,
-                modifier = Modifier
-                    .width(48.dp)
-                    .background(if (active) Legend else Color.Transparent)
-                    .clickable { onChange(opt) }
-                    .padding(vertical = 2.dp),
-                fontSize = 7.sp,
-                fontWeight = FontWeight.Bold,
-                color = if (active) Face else Dim,
-                textAlign = TextAlign.Center,
-            )
-        }
-    }
-}
-
-@Composable
-private fun MiniToggle(label: String, on: Boolean, onChange: (Boolean) -> Unit) {
-    Text(
-        label,
-        modifier = Modifier
-            .clip(RoundedCornerShape(2.dp))
-            .background(if (on) Classic737Palette.Ok else Face)
-            .border(1.dp, Border, RoundedCornerShape(2.dp))
-            .clickable { onChange(!on) }
-            .padding(horizontal = 6.dp, vertical = 3.dp),
-        fontSize = 7.sp,
-        fontWeight = FontWeight.Bold,
-        color = if (on) Color.Black else Legend,
-    )
+private fun normRet(v: String): String = when {
+    v.startsWith("RETR", true) -> "RETR"
+    v.equals("EXT", true) -> "EXT"
+    v.equals("ON", true) -> "ON"
+    else -> "RETR"
 }
