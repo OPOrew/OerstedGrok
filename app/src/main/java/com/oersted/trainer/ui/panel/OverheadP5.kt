@@ -410,7 +410,7 @@ private fun AirCondPlate(s: SimState, d: Derived, edit: (SimState.() -> Unit) ->
             listOf("AUTO", "STBY", "MAN AC", "MAN DC"),
         ) { id -> edit { pressMode = id } }
         Text(
-            "ΔP ${"%.1f".format(d.cabinDiff)}  OUTFLOW ${"%.0f".format(d.outflow * 100)}%",
+            "ΔP ${"%.1f".format(s.cabinDiff)}  OUTFLOW ${"%.0f".format(s.outflow * 100)}%",
             fontFamily = FontFamily.Monospace,
             fontSize = 8.sp,
             color = DimLegend,
