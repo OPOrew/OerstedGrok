@@ -26,15 +26,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.oersted.trainer.ui.panel.MainInstrumentPanel
+import com.oersted.trainer.ui.panel.OverheadP5
 import com.oersted.trainer.ui.pedestal.CenterPedestal
 import com.oersted.trainer.ui.pedestal.ThrustLinkButton
 
 /**
  * Flight deck: only the primary aircraft panels (aligned with web flight-deck).
  * - Main Instrument Panel
+ * - P5 Forward Overhead (OverheadP5)
  * - Center Pedestal
  * Training + log remain as side tools (same as web).
- * Full P5 interactive overhead (web Overhead / OverheadP5) is not ported yet.
  */
 @Composable
 fun CockpitScreen(model: CockpitModel, audio: com.oersted.trainer.platform.AudioEngine) {
@@ -78,6 +79,10 @@ fun CockpitScreen(model: CockpitModel, audio: com.oersted.trainer.platform.Audio
                 scale = panelScale,
                 modifier = Modifier.fillMaxWidth(),
             )
+
+            Spacer(Modifier.height(16.dp))
+
+            OverheadP5(cockpit = model, modifier = Modifier.fillMaxWidth())
 
             Spacer(Modifier.height(16.dp))
 
